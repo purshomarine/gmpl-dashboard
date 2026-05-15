@@ -1,20 +1,13 @@
 import { useState } from 'react'
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts'
-import { SCENARIO_PRESETS, SENSITIVITY } from '../data/seed.js'
+import { SCENARIO_PRESETS, SENSITIVITY, calcPL } from '../data/seed.js'
 import { C, Card, SectionLabel, GoldButton, tooltipStyle } from './ui.jsx'
 
-function calcPL(a) {
-  const vc = 8 + a.extra
-  const rev    = vc*(a.util/100)*a.rate*365/1e6
-  const bunk   = vc*(a.bunker*25*365)/1e6
-  const opex   = vc*a.opex*365/1e6
-  const ebitda = rev - bunk - opex
-  return { rev:rev.toFixed(1), ebitda:ebitda.toFixed(1), margin:((ebitda/rev)*100).toFixed(1), bunk:bunk.toFixed(1), opex:opex.toFixed(1), vessels:vc }
-}
+
 
 const SLIDERS = [
   {k:'util',   l:'Fleet Utilisation',   min:40, max:100,  step:1,   unit:'%'},
-  {k:'rate',   l:'Day Rate (USD)',       min:8000,max:35000,step:500, unit:''},
+  {k:'poolRate',   l:'Pool Rate (USD/day)',       min:8000,max:35000,step:500, unit:''},
   {k:'bunker', l:'VLSFO Bunker ($/MT)', min:400,max:1200, step:10,  unit:''},
   {k:'inr',    l:'USD / INR',           min:78, max:92,   step:0.1, unit:''},
   {k:'extra',  l:'Additional Vessels',  min:0,  max:6,    step:1,   unit:''},

@@ -63,7 +63,7 @@ export default function AIAssistant({ onClose }) {
             <div style={{ width:32, height:32, background:`linear-gradient(135deg,${C.gold},${C.goldLight})`, borderRadius:8, display:'flex', alignItems:'center', justifyContent:'center', fontSize:16, color:C.bg }}>✦</div>
             <div>
               <div style={{ fontSize:13, fontWeight:700, color:C.gold }}>Chairman's Assistant</div>
-              <div style={{ fontSize:10, color:C.textMuted }}>AI-powered · Good Earth Maritime</div>
+              <div style={{ fontSize:10, color:C.textMuted }}>AI-powered · Goodearth Maritime</div>
             </div>
           </div>
           <button onClick={onClose} style={{ background:'none', border:`1px solid ${C.border}`, color:C.textMuted, width:28, height:28, borderRadius:6, fontSize:16, lineHeight:1, display:'flex', alignItems:'center', justifyContent:'center' }}>×</button>

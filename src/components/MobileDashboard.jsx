@@ -165,7 +165,7 @@ function SituationRoom({ onNavigate }) {
       {/* Date + greeting */}
       <div style={{ padding: '20px 20px 0', marginBottom: 18 }}>
         <div style={{ fontSize: 11, fontWeight: 700, color: M.muted, letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 4 }}>Good Morning — 13 May 2026</div>
-        <div style={{ fontFamily: "'Playfair Display',serif", fontSize: 22, fontWeight: 600, color: M.text }}>Good Earth Maritime</div>
+        <div style={{ fontFamily: "'Playfair Display',serif", fontSize: 22, fontWeight: 600, color: M.text }}>Goodearth Maritime</div>
         <div style={{ fontSize: 12, color: M.sub, marginTop: 2 }}>Chairman's Intelligence Dashboard</div>
       </div>
 
@@ -767,7 +767,7 @@ function MobileAssistant({ onClose }) {
           <div style={{ width: 34, height: 34, background: `linear-gradient(135deg,${M.gold},#E8C97A)`, borderRadius: 10, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 16, color: '#071120', fontWeight: 800 }}>✦</div>
           <div>
             <div style={{ fontSize: 14, fontWeight: 700, color: M.gold }}>Chairman's Assistant</div>
-            <div style={{ fontSize: 10, color: M.muted }}>AI-powered · Good Earth Maritime</div>
+            <div style={{ fontSize: 10, color: M.muted }}>AI-powered · Goodearth Maritime</div>
           </div>
         </div>
         <button onClick={onClose} style={{ background: M.card, border: `1px solid ${M.border}`, color: M.muted, width: 32, height: 32, borderRadius: 16, fontSize: 18, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>×</button>

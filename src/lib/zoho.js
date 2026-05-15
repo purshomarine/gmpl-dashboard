@@ -28,7 +28,7 @@ const DEMO_MODE    = !import.meta.env.VITE_ZOHO_TOKEN
 
 export const MOCK_ORG = {
   org_id:                  '10229182',
-  name:                    'Good Earth Maritime Pvt Ltd',
+  name:                    'Goodearth Maritime Private Limited',
   contact_name:            'N. Pillai — Finance Controller',
   email:                   'finance@goodearth-maritime.com',
   currency_code:           'USD',
@@ -69,13 +69,13 @@ export const MOCK_PL = [
 // ─── Mock Zoho Expense Data ──────────────────────────────────────────────────
 
 export const MOCK_EXPENSES = [
-  { expense_id:'EXP-10291', expense_item_name:'Port Dues & Pilotage',  category_name:'Port Charges',    merchant_name:'Hamriyah Free Zone Authority', amount:18400,  currency_code:'USD', date:'2026-05-12', report_status:'submitted', submitted_by:'Capt. Ahmed Hassan',      vessel:'MV Neptune Glory',   payment_mode:'Corporate Card' },
+  { expense_id:'EXP-10291', expense_item_name:'Port Dues & Pilotage',  category_name:'Port Charges',    merchant_name:'Hamriyah Free Zone Authority', amount:18400,  currency_code:'USD', date:'2026-05-12', report_status:'submitted', submitted_by:'Capt. Ahmed Hassan',      vessel:'MT Nura Kara',   payment_mode:'Corporate Card' },
   { expense_id:'EXP-10290', expense_item_name:'Travel & Accommodation',category_name:'Corporate Travel', merchant_name:'Marriott Al Barsha',           amount:4230,   currency_code:'USD', date:'2026-05-11', report_status:'approved',  submitted_by:'Fleet Mgr Ravi Kumar',     vessel:'Corporate',          payment_mode:'Corporate Card' },
-  { expense_id:'EXP-10289', expense_item_name:'Spare Parts & Stores',  category_name:'Technical',        merchant_name:'Wilhelmsen Ships Service',     amount:67800,  currency_code:'USD', date:'2026-05-10', report_status:'approved',  submitted_by:'Ch. Engr. Santos',         vessel:'MV Sea Empress',     payment_mode:'Bank Transfer'  },
-  { expense_id:'EXP-10288', expense_item_name:'Dry Dock & Repairs',    category_name:'Drydock',          merchant_name:'Dubai Drydocks World',         amount:245000, currency_code:'USD', date:'2026-05-09', report_status:'pending',   submitted_by:'Technical Supt. Mehta',    vessel:'MV Saffron Star',    payment_mode:'Bank Transfer'  },
-  { expense_id:'EXP-10287', expense_item_name:'Bunker Purchase',       category_name:'Bunkers',          merchant_name:'ENOC Marine',                 amount:189300, currency_code:'USD', date:'2026-05-08', report_status:'approved',  submitted_by:'Capt. Liu Wei',            vessel:'MV Maritime Crown',  payment_mode:'Bank Transfer'  },
-  { expense_id:'EXP-10286', expense_item_name:'Agency Fees',           category_name:'Port Agency',      merchant_name:'Gulf Agency Company',         amount:8900,   currency_code:'USD', date:'2026-05-07', report_status:'submitted', submitted_by:'Operations — Singh',       vessel:'MV Good Earth Alpha',payment_mode:'Corporate Card' },
-  { expense_id:'EXP-10285', expense_item_name:'Crew Welfare',          category_name:'Crew',             merchant_name:'Various',                     amount:3200,   currency_code:'USD', date:'2026-05-06', report_status:'approved',  submitted_by:'Manning Supt. Fernandez',  vessel:'MV Indian Ocean',    payment_mode:'Cash'           },
+  { expense_id:'EXP-10289', expense_item_name:'Spare Parts & Stores',  category_name:'Technical',        merchant_name:'Wilhelmsen Ships Service',     amount:67800,  currency_code:'USD', date:'2026-05-10', report_status:'approved',  submitted_by:'Ch. Engr. Santos',         vessel:'MT Prelude',     payment_mode:'Bank Transfer'  },
+  { expense_id:'EXP-10288', expense_item_name:'Dry Dock & Repairs',    category_name:'Drydock',          merchant_name:'Dubai Drydocks World',         amount:245000, currency_code:'USD', date:'2026-05-09', report_status:'pending',   submitted_by:'Technical Supt. Mehta',    vessel:'MT Nura Bright',    payment_mode:'Bank Transfer'  },
+  { expense_id:'EXP-10287', expense_item_name:'Bunker Purchase',       category_name:'Bunkers',          merchant_name:'ENOC Marine',                 amount:189300, currency_code:'USD', date:'2026-05-08', report_status:'approved',  submitted_by:'Capt. Liu Wei',            vessel:'Cosmos 1',  payment_mode:'Bank Transfer'  },
+  { expense_id:'EXP-10286', expense_item_name:'Agency Fees',           category_name:'Port Agency',      merchant_name:'Gulf Agency Company',         amount:8900,   currency_code:'USD', date:'2026-05-07', report_status:'submitted', submitted_by:'Operations — Singh',       vessel:'MV Goodearth Alpha',payment_mode:'Corporate Card' },
+  { expense_id:'EXP-10285', expense_item_name:'Crew Welfare',          category_name:'Crew',             merchant_name:'Various',                     amount:3200,   currency_code:'USD', date:'2026-05-06', report_status:'approved',  submitted_by:'Manning Supt. Fernandez',  vessel:'Cosmos 2',    payment_mode:'Cash'           },
   { expense_id:'EXP-10284', expense_item_name:'Insurance Premium',     category_name:'Insurance',        merchant_name:'UK P&I Club',                 amount:42000,  currency_code:'USD', date:'2026-05-05', report_status:'approved',  submitted_by:'Finance Controller',       vessel:'Corporate',          payment_mode:'Bank Transfer'  },
 ]
 

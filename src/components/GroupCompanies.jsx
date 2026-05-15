@@ -6,6 +6,7 @@ const STATUS_COL = { active: C.green, pending: C.amber, Current: C.green, Overdu
 export default function GroupCompanies() {
   const gmpl = GROUP_ENTITIES.find(e => e.id === 'gmpl')
   const nura = GROUP_ENTITIES.find(e => e.id === 'nura')
+  const nuraMgmt = GROUP_ENTITIES.find(e => e.id === 'nura_mgmt')
   const nuraVessels = VESSELS.filter(v => nura.vessels.includes(v.id))
   const overdueCharters = NURA_CHARTERS.filter(c => c.paymentStatus === 'Overdue')
 
