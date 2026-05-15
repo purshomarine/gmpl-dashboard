@@ -2,38 +2,67 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>GMPL · Chairman's Intelligence Dashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="GMPL" />
+    <meta name="theme-color" content="#071120" />
+    <meta name="description" content="Good Earth Maritime — Chairman's Executive Intelligence Dashboard" />
+    <link rel="manifest" href="/manifest.json" />
+    <link rel="apple-touch-icon" href="/icon-192.png" />
+    <title>GMPL · Chairman's Dashboard</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <style>
       *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
       html, body, #root { height: 100%; }
-      body { background: #060C18; color: #EEF5FF; font-family: 'DM Sans', sans-serif; -webkit-font-smoothing: antialiased; }
-      ::-webkit-scrollbar { width: 4px; height: 4px; }
-      ::-webkit-scrollbar-track { background: #0A1020; }
-      ::-webkit-scrollbar-thumb { background: #1E3A5F; border-radius: 2px; }
-      ::-webkit-scrollbar-thumb:hover { background: #C9A457; }
+
+      body {
+        background: #071120;
+        color: #F4F8FF;
+        font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+        -webkit-font-smoothing: antialiased;
+        -webkit-tap-highlight-color: transparent;
+        overscroll-behavior: none;
+      }
+
+      /* Prevent iOS bounce on body but allow scroll inside containers */
+      html { overflow: hidden; height: 100%; }
+      body { overflow: auto; height: 100%; }
+
+      ::-webkit-scrollbar { width: 3px; height: 3px; }
+      ::-webkit-scrollbar-track { background: transparent; }
+      ::-webkit-scrollbar-thumb { background: #1E3558; border-radius: 2px; }
+
       input[type=range] { -webkit-appearance: none; width: 100%; height: 4px; background: #1A3050; border-radius: 2px; outline: none; }
-      input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 14px; height: 14px; border-radius: 50%; background: #C9A457; cursor: pointer; box-shadow: 0 0 6px rgba(201,164,87,0.5); }
-      button { font-family: inherit; cursor: pointer; }
-      @keyframes pulse-green { 0%,100%{box-shadow:0 0 0 0 rgba(16,217,160,0.4)}50%{box-shadow:0 0 0 5px rgba(16,217,160,0)} }
+      input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 18px; height: 18px; border-radius: 50%; background: #D4AC5A; cursor: pointer; box-shadow: 0 0 8px rgba(212,172,90,0.5); }
+
+      button { font-family: inherit; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+      input, textarea, select { font-family: inherit; }
+
+      /* Safe area support for iPhone notch / home indicator */
+      .safe-bottom { padding-bottom: env(safe-area-inset-bottom, 0px); }
+
+      @keyframes pulse-green { 0%,100%{box-shadow:0 0 0 0 rgba(15,212,154,0.4)}50%{box-shadow:0 0 0 5px rgba(15,212,154,0)} }
       @keyframes pulse-red   { 0%,100%{box-shadow:0 0 0 0 rgba(244,63,94,0.5)}50%{box-shadow:0 0 0 6px rgba(244,63,94,0)} }
       @keyframes pulse-amber { 0%,100%{box-shadow:0 0 0 0 rgba(245,158,11,0.4)}50%{box-shadow:0 0 0 5px rgba(245,158,11,0)} }
       @keyframes slide-right { from{transform:translateX(100%);opacity:0}to{transform:translateX(0);opacity:1} }
-      @keyframes fade-up     { from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)} }
+      @keyframes fade-up     { from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)} }
       @keyframes glow-gold   { 0%,100%{box-shadow:0 0 8px rgba(201,164,87,0.2)}50%{box-shadow:0 0 20px rgba(201,164,87,0.5)} }
-      .pulse-green{animation:pulse-green 2s ease-in-out infinite}
-      .pulse-red{animation:pulse-red 1.5s ease-in-out infinite}
-      .pulse-amber{animation:pulse-amber 2s ease-in-out infinite}
-      .fade-up{animation:fade-up 0.3s ease both}
-      .glow-gold{animation:glow-gold 3s ease-in-out infinite}
-      .leaflet-popup-content-wrapper{background:#0F1E35!important;border:1px solid rgba(201,164,87,0.3)!important;border-radius:8px!important;color:#EEF5FF!important;box-shadow:0 8px 32px rgba(0,0,0,0.6)!important}
-      .leaflet-popup-tip{background:#0F1E35!important}
-      .leaflet-popup-close-button{color:#C9A457!important;font-size:18px!important}
-      .leaflet-control-zoom a{background:#0F1E35!important;color:#C9A457!important;border-color:#1A3050!important}
+
+      .pulse-green { animation: pulse-green 2s ease-in-out infinite; }
+      .pulse-red   { animation: pulse-red 1.5s ease-in-out infinite; }
+      .pulse-amber { animation: pulse-amber 2s ease-in-out infinite; }
+      .fade-up     { animation: fade-up 0.3s ease both; }
+      .glow-gold   { animation: glow-gold 3s ease-in-out infinite; }
+
+      /* Leaflet dark overrides */
+      .leaflet-popup-content-wrapper { background:#112236!important; border:1px solid rgba(201,164,87,0.3)!important; border-radius:8px!important; color:#F4F8FF!important; box-shadow:0 8px 32px rgba(0,0,0,0.6)!important; }
+      .leaflet-popup-tip            { background:#112236!important; }
+      .leaflet-popup-close-button   { color:#C9A457!important; font-size:18px!important; }
+      .leaflet-control-zoom a       { background:#112236!important; color:#C9A457!important; border-color:#1E3558!important; }
     </style>
   </head>
   <body>
