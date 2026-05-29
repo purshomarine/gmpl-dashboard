@@ -1,0 +1,56 @@
+:root {
+  /* Core Palette (from gmpl_uiux_spec.md — Section 2.2) */
+  --bg-base:        #0A0D12;
+  --bg-surface:     #111620;
+  --bg-elevated:    #1A2030;
+  --bg-border:      #252D3D;
+
+  /* Accent */
+  --gold:           #C9A84C;
+  --gold-muted:     #8A6A2A;
+  --gold-glow:      rgba(201,168,76,0.12);
+
+  /* Status */
+  --status-green:   #2ECC71;
+  --status-amber:   #F39C12;
+  --status-red:     #E74C3C;
+  --status-blue:    #3498DB;
+
+  /* Text */
+  --text-primary:   #F0F4FC;
+  --text-secondary: #8B98B8;
+  --text-muted:     #4A5568;
+  --text-gold:      #C9A84C;
+
+  /* Data Viz */
+  --chart-1:        #C9A84C;
+  --chart-2:        #3498DB;
+  --chart-3:        #2ECC71;
+  --chart-4:        #E74C3C;
+  --chart-5:        #9B59B6;
+
+  /* Typography tokens (Section 2.3) */
+  --font-display:   'DM Serif Display', Georgia, serif;
+  --font-ui:        'IBM Plex Mono', 'Courier New', monospace;
+  --font-body:      'Inter', system-ui, sans-serif;
+
+  /* Sizing Scale */
+  --text-xs:   0.65rem;
+  --text-sm:   0.75rem;
+  --text-base: 0.875rem;
+  --text-md:   1rem;
+  --text-lg:   1.25rem;
+  --text-xl:   1.75rem;
+  --text-2xl:  2.5rem;
+  --text-3xl:  3.5rem;
+
+  /* Spacing System (Section 2.4) */
+  --space-1:   4px;
+  --space-2:   8px;
+  --space-3:   12px;
+  --space-4:   16px;
+  --space-5:   24px;
+  --space-6:   32px;
+  --space-7:   48px;
+  --space-8:   64px;
+}

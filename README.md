@@ -70,10 +70,8 @@ vercel
    - `VITE_SUPABASE_ANON_KEY`
    - `VITE_ZOHO_TOKEN` (optional — leave blank for demo mode)
    - `VITE_ZOHO_ORG_ID` (optional)
-7. Deploy → your URL is live in ~60 seconds
-
----
-
+   - `VITE_CLAUDE_API_KEY` (optional — leave blank to run the AI assistant in demo/placeholder mode)
+   - `VITE_CLAUDE_MODEL` (optional, defaults to `claude-sonnet-4-20250514`)
 ## Provision Supabase
 
 1. Create a free project at https://supabase.com

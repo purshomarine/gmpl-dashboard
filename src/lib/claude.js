@@ -1,5 +1,7 @@
 const API_URL = 'https://api.anthropic.com/v1/messages'
-const MODEL   = 'claude-sonnet-4-20250514'
+const MODEL   = import.meta.env.VITE_CLAUDE_MODEL || 'claude-sonnet-4-20250514'
+const API_KEY = import.meta.env.VITE_CLAUDE_API_KEY
+const LIVE_MODE = !!API_KEY
 
 const SYSTEM_CONTEXT = `You are the Chairman's AI executive assistant for Goodearth Maritime Private Limited, a UAE/India-based maritime group.
 
@@ -35,10 +37,18 @@ KEY ISSUES TODAY:
 Write in a direct, senior executive style. Keep responses concise. Human always retains final decision — AI is advisory only.`
 
 export async function callClaude(messages, maxTokens = 800) {
+  if (!LIVE_MODE) {
+    console.warn('[Claude] VITE_CLAUDE_API_KEY is not configured')
+    return 'Claude AI is unavailable. Set VITE_CLAUDE_API_KEY in your .env file to enable live AI.'
+  }
+
   try {
     const res = await fetch(API_URL, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${API_KEY}`,
+      },
       body: JSON.stringify({ model: MODEL, max_tokens: maxTokens, system: SYSTEM_CONTEXT, messages }),
     })
     const data = await res.json()

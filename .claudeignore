@@ -1,0 +1,10 @@
+node_modules/
+.next/
+dist/
+build/
+.git/
+*.log
+*.lock
+coverage/
+.vercel/
+public/images/
