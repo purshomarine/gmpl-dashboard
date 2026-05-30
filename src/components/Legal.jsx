@@ -143,7 +143,7 @@ export default function Legal() {
       <div style={{ background:C.amberDim, border:`1px solid ${C.amber}44`, borderRadius:10, padding:'14px 18px', display:'flex', justifyContent:'space-between', alignItems:'center', flexWrap:'wrap', gap:10 }}>
         <div>
           <div style={{ fontSize:12, fontWeight:700, color:C.amber }}>⚠ CII Reporting Deadline — 31 May 2026</div>
-          <div style={{ fontSize:12, color:C.textSub, marginTop:2 }}>Annual Carbon Intensity Indicator report — 3 vessels not yet submitted: Sea Empress, Neptune Glory, Gulf Pioneer</div>
+          <div style={{ fontSize:12, color:C.textSub, marginTop:2 }}>Annual Carbon Intensity Indicator report — 3 vessels not yet submitted: MT Prelude, MT Anael, MT Nura Kara</div>
         </div>
         <GoldButton outline>Open CII Tracker →</GoldButton>
       </div>

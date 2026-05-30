@@ -80,10 +80,10 @@ export const MOCK_EXPENSES = [
 ]
 
 export const MOCK_REPORTS = [
-  { report_id:'ER-2847', report_name:'May 2026 — Voyage Expenses Neptune Glory',   report_status:'submitted', submitted_by:'Capt. Ahmed Hassan',  total:28450,  currency_code:'USD', submitted_date:'2026-05-12', num_expenses:4 },
+  { report_id:'ER-2847', report_name:'May 2026 — Voyage Expenses MT Nura Kara',   report_status:'submitted', submitted_by:'Capt. Ahmed Hassan',  total:28450,  currency_code:'USD', submitted_date:'2026-05-12', num_expenses:4 },
   { report_id:'ER-2846', report_name:'Apr 2026 — Corporate Travel Q2',             report_status:'approved',  submitted_by:'Fleet Mgr Ravi Kumar',total:11230,  currency_code:'USD', submitted_date:'2026-04-30', num_expenses:6 },
-  { report_id:'ER-2845', report_name:'May 2026 — Technical Stores Sea Empress',    report_status:'approved',  submitted_by:'Ch. Engr. Santos',    total:82100,  currency_code:'USD', submitted_date:'2026-05-10', num_expenses:3 },
-  { report_id:'ER-2844', report_name:'Saffron Star Drydock 2026 — Phase 1',        report_status:'pending',   submitted_by:'Technical Supt. Mehta',total:245000, currency_code:'USD', submitted_date:'2026-05-09', num_expenses:1 },
+  { report_id:'ER-2845', report_name:'May 2026 — Technical Stores MT Nura Bright',    report_status:'approved',  submitted_by:'Ch. Engr. Santos',    total:82100,  currency_code:'USD', submitted_date:'2026-05-10', num_expenses:3 },
+  { report_id:'ER-2844', report_name:'MT Prelude — IOPP Survey Preparation 2026',        report_status:'pending',   submitted_by:'Technical Supt. Mehta',total:245000, currency_code:'USD', submitted_date:'2026-05-09', num_expenses:1 },
 ]
 
 // ─── API Helpers ─────────────────────────────────────────────────────────────

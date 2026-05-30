@@ -153,7 +153,7 @@ export default function AIAssistant({ onClose }) {
             <div ref={bottomRef}/>
             {/* Quick prompts */}
             <div style={{ display:'flex', flexWrap:'wrap', gap:6, marginTop:4 }}>
-              {['What needs my attention today?','Status of Saffron Star?','Summarise legal exposure','Fleet utilisation trend'].map(q=>(
+              {['What needs my attention today?','Status of MT Prelude?','Summarise legal exposure','Fleet utilisation trend'].map(q=>(
                 <button key={q} onClick={()=>setInput(q)} style={{ fontSize:10, padding:'5px 10px', borderRadius:15, border:`1px solid ${C.border}`, background:'transparent', color:C.textMuted, fontFamily:'inherit', cursor:'pointer' }}>{q}</button>
               ))}
             </div>
@@ -173,7 +173,7 @@ export default function AIAssistant({ onClose }) {
             </div>
             <div>
               <div style={{ fontSize:11, color:C.textMuted, marginBottom:6, fontWeight:600, textTransform:'uppercase', letterSpacing:'0.06em' }}>Subject</div>
-              <input value={composeSubj} onChange={e=>setComposeSubj(e.target.value)} placeholder="e.g. MV Saffron Star — Drydock Schedule" style={{ width:'100%', background:C.card, border:`1px solid ${C.border}`, borderRadius:6, color:C.text, padding:'9px 12px', fontSize:12, fontFamily:'inherit', outline:'none' }}/>
+              <input value={composeSubj} onChange={e=>setComposeSubj(e.target.value)} placeholder="e.g. MT Prelude — IOPP Certificate Renewal" style={{ width:'100%', background:C.card, border:`1px solid ${C.border}`, borderRadius:6, color:C.text, padding:'9px 12px', fontSize:12, fontFamily:'inherit', outline:'none' }}/>
             </div>
             <div>
               <div style={{ fontSize:11, color:C.textMuted, marginBottom:6, fontWeight:600, textTransform:'uppercase', letterSpacing:'0.06em' }}>Context / Key Points</div>
