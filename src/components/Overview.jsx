@@ -50,18 +50,18 @@ export default function Overview() {
         </div>
         <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fit, minmax(220px,1fr))', gap:16 }}>
           <BriefCol color={C.red}   icon="⚠" label="Needs Attention" items={[
-            'MV Saffron Star SMC expires in 11 days — class suspension risk if drydock not approved immediately',
+            'MT Prelude IOPP Certificate expires in 38 days — renewal survey must be booked immediately',
             'Petrochemical Corp arbitration 14 Jun — Hill Dickinson briefing still unconfirmed',
-            'Ship Building revenue $0.6M below budget — Eastern Shipyard delay unresolved',
+            'MT Prelude pool transfer to Maersk Tankers — allocation date still unconfirmed',
           ]}/>
           <BriefCol color={C.green} icon="✓" label="On Track" items={[
-            'Fleet utilisation at 82% — above 80% target for third consecutive month',
+            'Fleet utilisation at 87% — above 80% target for third consecutive month',
             'Ship Management margin 40% — strongest performing vertical this quarter',
-            'MV Neptune Glory and Maritime Crown both above 91% utilised',
+            'MT Nura Kara and MT Anael both above 91% utilised this month',
           ]}/>
           <BriefCol color={C.blue}  icon="◎" label="Market Intelligence" items={[
-            'VLSFO $612/MT — Red Sea rerouting adding 12–15 days per voyage; monitor freight rate impact',
-            'Baltic Dry Index +3.2% — chemical tanker spot demand strengthening in Arabian Gulf',
+            'VLSFO $612/MT Fujairah — Red Sea rerouting adding 12–15 days per voyage; monitor freight rate impact',
+            'Baltic Clean Tanker Index +1.8% — product tanker spot demand strengthening in Arabian Gulf',
           ]}/>
         </div>
       </Card>

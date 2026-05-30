@@ -1,4 +1,4 @@
-const API_URL = 'https://api.anthropic.com/v1/messages'
+const API_URL = '/api/claude'
 const MODEL   = import.meta.env.VITE_CLAUDE_MODEL || 'claude-sonnet-4-20250514'
 const API_KEY = import.meta.env.VITE_CLAUDE_API_KEY
 const LIVE_MODE = !!API_KEY
@@ -47,7 +47,7 @@ export async function callClaude(messages, maxTokens = 800) {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${API_KEY}`,
+  
       },
       body: JSON.stringify({ model: MODEL, max_tokens: maxTokens, system: SYSTEM_CONTEXT, messages }),
     })
