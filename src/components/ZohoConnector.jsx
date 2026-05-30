@@ -58,45 +58,6 @@ export default function ZohoConnector() {
   return (
     <div style={{ display:'flex', flexDirection:'column', gap:16 }}>
 
-      {/* ERP Identity card */}
-      <HeroCard>
-        <div style={{ display:'flex', justifyContent:'space-between', alignItems:'flex-start', flexWrap:'wrap', gap:14, marginBottom:16 }}>
-          <div style={{ display:'flex', alignItems:'center', gap:14 }}>
-            <div style={{ width:48, height:48, background:`linear-gradient(135deg,${C.gold},${C.goldLight})`, borderRadius:10, display:'flex', alignItems:'center', justifyContent:'center', fontSize:22, color:C.bg, fontWeight:700, flexShrink:0 }}>Z</div>
-            <div>
-              <div style={{ fontFamily:"'Playfair Display',serif", fontSize:18, fontWeight:600, color:C.gold }}>Zoho Finance Suite</div>
-              <div style={{ fontSize:12, color:C.textSub, marginTop:2 }}>GMPL's Primary ERP · {ZOHO_SUITE.region} · Org {zohoConnectorStatus.orgId}</div>
-              <div style={{ fontSize:11, color:C.textMuted, marginTop:3 }}>{ZOHO_SUITE.description}</div>
-            </div>
-          </div>
-          <div style={{ display:'flex', flexDirection:'column', alignItems:'flex-end', gap:8 }}>
-            <div style={{ display:'flex', alignItems:'center', gap:8 }}>
-              <span style={{ fontSize:11, color:C.textMuted }}>Last sync: {lastSync}</span>
-              <GoldButton onClick={handleSync}>{syncing ? '⟳ Syncing…' : '⟳ Sync Now'}</GoldButton>
-            </div>
-            <div style={{ background:zohoConnectorStatus.status==='demo'?C.amberDim:C.greenDim, border:`1px solid ${zohoConnectorStatus.status==='demo'?C.amber:C.green}44`, borderRadius:6, padding:'4px 12px', fontSize:11, fontWeight:600, color:zohoConnectorStatus.status==='demo'?C.amber:C.green }}>
-              {zohoConnectorStatus.status==='demo' ? '⚠ DEMO MODE — set VITE_ZOHO_TOKEN to go live' : '✓ LIVE — OAuth 2.0 Connected'}
-            </div>
-          </div>
-        </div>
-
-        {/* Module status pills */}
-        <div style={{ display:'flex', flexWrap:'wrap', gap:8 }}>
-          {CONNECTORS.map(conn => (
-            <div key={conn.name} style={{ display:'flex', alignItems:'center', gap:7, background:'rgba(6,12,24,0.55)', border:`1px solid ${conn.status==='connected'?C.green+'33':C.amber+'33'}`, borderRadius:20, padding:'5px 12px' }}>
-              <StatusDot s={conn.status==='connected'?'green':'amber'} animate size={6}/>
-              <span style={{ fontSize:11, fontWeight:600, color:C.text }}>{conn.name}</span>
-              <span style={{ fontSize:10, color:C.textMuted }}>· {conn.detail}</span>
-            </div>
-          ))}
-        </div>
-
-        {/* API scope strip */}
-        <div style={{ marginTop:14, padding:'8px 12px', background:'rgba(6,12,24,0.5)', borderRadius:6, fontSize:10, color:C.textMuted, borderLeft:`3px solid ${C.green}`, fontFamily:'DM Mono, monospace' }}>
-          Scopes: {zohoConnectorStatus.scopes.join(' · ')}
-        </div>
-      </HeroCard>
-
       {/* KPI summary row */}
       <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fit,minmax(150px,1fr))', gap:10 }}>
         {[
@@ -295,6 +256,45 @@ export default function ZohoConnector() {
           </div>
         </div>
       )}
+
+      {/* ERP Identity card */}
+      <HeroCard>
+        <div style={{ display:'flex', justifyContent:'space-between', alignItems:'flex-start', flexWrap:'wrap', gap:14, marginBottom:16 }}>
+          <div style={{ display:'flex', alignItems:'center', gap:14 }}>
+            <div style={{ width:48, height:48, background:`linear-gradient(135deg,${C.gold},${C.goldLight})`, borderRadius:10, display:'flex', alignItems:'center', justifyContent:'center', fontSize:22, color:C.bg, fontWeight:700, flexShrink:0 }}>Z</div>
+            <div>
+              <div style={{ fontFamily:"'Playfair Display',serif", fontSize:18, fontWeight:600, color:C.gold }}>Zoho Finance Suite</div>
+              <div style={{ fontSize:12, color:C.textSub, marginTop:2 }}>GMPL's Primary ERP · {ZOHO_SUITE.region} · Org {zohoConnectorStatus.orgId}</div>
+              <div style={{ fontSize:11, color:C.textMuted, marginTop:3 }}>{ZOHO_SUITE.description}</div>
+            </div>
+          </div>
+          <div style={{ display:'flex', flexDirection:'column', alignItems:'flex-end', gap:8 }}>
+            <div style={{ display:'flex', alignItems:'center', gap:8 }}>
+              <span style={{ fontSize:11, color:C.textMuted }}>Last sync: {lastSync}</span>
+              <GoldButton onClick={handleSync}>{syncing ? '⟳ Syncing…' : '⟳ Sync Now'}</GoldButton>
+            </div>
+            <div style={{ background:zohoConnectorStatus.status==='demo'?C.amberDim:C.greenDim, border:`1px solid ${zohoConnectorStatus.status==='demo'?C.amber:C.green}44`, borderRadius:6, padding:'4px 12px', fontSize:11, fontWeight:600, color:zohoConnectorStatus.status==='demo'?C.amber:C.green }}>
+              {zohoConnectorStatus.status==='demo' ? '⚠ DEMO MODE — set VITE_ZOHO_TOKEN to go live' : '✓ LIVE — OAuth 2.0 Connected'}
+            </div>
+          </div>
+        </div>
+
+        {/* Module status pills */}
+        <div style={{ display:'flex', flexWrap:'wrap', gap:8 }}>
+          {CONNECTORS.map(conn => (
+            <div key={conn.name} style={{ display:'flex', alignItems:'center', gap:7, background:'rgba(6,12,24,0.55)', border:`1px solid ${conn.status==='connected'?C.green+'33':C.amber+'33'}`, borderRadius:20, padding:'5px 12px' }}>
+              <StatusDot s={conn.status==='connected'?'green':'amber'} animate size={6}/>
+              <span style={{ fontSize:11, fontWeight:600, color:C.text }}>{conn.name}</span>
+              <span style={{ fontSize:10, color:C.textMuted }}>· {conn.detail}</span>
+            </div>
+          ))}
+        </div>
+
+        {/* API scope strip */}
+        <div style={{ marginTop:14, padding:'8px 12px', background:'rgba(6,12,24,0.5)', borderRadius:6, fontSize:10, color:C.textMuted, borderLeft:`3px solid ${C.green}`, fontFamily:'DM Mono, monospace' }}>
+          Scopes: {zohoConnectorStatus.scopes.join(' · ')}
+        </div>
+      </HeroCard>
     </div>
   )
 }
