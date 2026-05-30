@@ -148,9 +148,11 @@ export const BUNKERING = [
 // ─── POOL EARNINGS ────────────────────────────────────────────────────────────
 export const POOL_EARNINGS = [
   { id:'PE-001', pool:'Maersk Tankers', vessel:'MT Nura Kara',  period:'Apr-26', grossEarnings:638400, poolDeductions:31920, netEarnings:606480, poolPoints:1.12, tce:21280, statement:'MT_NuraKara_Maersk_Apr2026.pdf', uploadDate:'2026-05-08' },
-  { id:'PE-002', pool:'Maersk Tankers', vessel:'MT Prelude',     period:'Apr-26', grossEarnings:598200, poolDeductions:29910, netEarnings:568290, poolPoints:1.05, tce:19940, statement:'MT_Prelude_Hafnia_Apr2026.pdf',   uploadDate:'2026-05-10', note:'Final month in Hafnia pool' },
+  { id:'PE-002', pool:'Hafnia',         vessel:'MT Prelude',     period:'Apr-26', grossEarnings:598200, poolDeductions:29910, netEarnings:568290, poolPoints:1.05, tce:19940, statement:'MT_Prelude_Hafnia_Apr2026.pdf',   uploadDate:'2026-05-10', note:'Final month in Hafnia pool' },
   { id:'PE-003', pool:'Maersk Tankers', vessel:'MT Nura Kara',   period:'Mar-26', grossEarnings:621000, poolDeductions:31050, netEarnings:589950, poolPoints:1.10, tce:20700, statement:'MT_NuraKara_Maersk_Mar2026.pdf', uploadDate:'2026-04-09' },
   { id:'PE-004', pool:'Hafnia',         vessel:'MT Prelude',     period:'Mar-26', grossEarnings:582000, poolDeductions:29100, netEarnings:552900, poolPoints:1.02, tce:19400, statement:'MT_Prelude_Hafnia_Mar2026.pdf',   uploadDate:'2026-04-11' },
+  { id:'PE-005', pool:'Maersk Tankers', vessel:'MT Nura Kara',  period:'May-26', grossEarnings:654000, poolDeductions:32700, netEarnings:621300, poolPoints:1.14, tce:21710, statement:'MT_NuraKara_Maersk_May2026.pdf', uploadDate:'2026-05-10' },
+  { id:'PE-006', pool:'Maersk Tankers', vessel:'MT Prelude',    period:'May-26', grossEarnings:612000, poolDeductions:30600, netEarnings:581400, poolPoints:1.08, tce:20460, statement:'MT_Prelude_Maersk_May2026.pdf',  uploadDate:'2026-05-10', note:'First month in Maersk Tankers Pool' },
 ]
 
 // ─── AWARDS — BEST MASTER & CREW ─────────────────────────────────────────────
