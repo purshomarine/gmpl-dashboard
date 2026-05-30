@@ -137,7 +137,42 @@ export async function generateTalkingPoints(matter) {
 }
 
 export async function generateVesselBriefing(vessel) {
-  return callClaude([{ role:'user', content:`vessel briefing for ${vessel.name}` }])
+  const commercialDesc = vessel.commercialMode === 'pool'
+    ? `Operating in ${vessel.pool} at ~$${vessel.dayRate?.toLocaleString()}/day`
+    : vessel.commercialMode === 'tc'
+    ? `Time Charter to ${vessel.charterer} at $${vessel.dayRate?.toLocaleString()}/day`
+    : 'Captive cargo operations — Archean Chemical'
+
+  const briefing = `**${vessel.name} — Vessel Briefing**
+
+**Status:** ${vessel.status?.toUpperCase()} | ${vessel.pos}
+**Route:** ${vessel.route}
+**Next Port:** ${vessel.nextPort || '—'} | ETA: ${vessel.eta || '—'}
+**Noon Position:** ${vessel.latDisplay || '—'} / ${vessel.lngDisplay || '—'}
+
+**Commercial:** ${commercialDesc}
+**Utilisation:** ${vessel.util}% (target ${vessel.target}%)
+**P&L MTD:** ${vessel.pl >= 0 ? '+' : ''}$${(vessel.pl/1000).toFixed(0)}K
+
+**Bunkers on Board:**
+VLSFO: ${vessel.rob_vlsfo || '—'} MT | MDO: ${vessel.rob_mdo || '—'} MT
+
+**Compliance:**
+Certificates: ${vessel.certs === 'ok' ? '✓ Current' : '⚠ Attention Required'}
+Open Defects: ${vessel.defects} item(s)
+
+**Insurance:**
+H&M: ${vessel.insurer_hm || '—'} | P&I: ${vessel.insurer_pi || '—'}
+Insured Value: $${vessel.insured_value ? (vessel.insured_value/1e6).toFixed(1) + 'M' : '—'}
+Loss of Hire: ${vessel.loh_covered ? '✓ Covered' : '—'}
+
+**Note:** ${vessel.note || '—'}
+
+**Question for your Fleet Manager:**
+"What is the current status on ${vessel.name} and
+is everything on track for the next port call?"`
+
+  return briefing
 }
 
 export async function draftEmail(recipient, subject, context) {
