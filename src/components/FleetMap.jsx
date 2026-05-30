@@ -3,6 +3,7 @@ import { MapContainer, TileLayer, Marker, Popup, Polyline, useMap } from 'react-
 import L from 'leaflet'
 import { VESSELS } from '../data/seed.js'
 import { C, Card, SectionLabel, GoldButton, StatusDot } from './ui.jsx'
+import { generateVesselBriefing } from '../lib/claude.js'
 
 const STATUS_COLOR = { green: C.green, amber: C.amber, red: C.red }
 
@@ -41,6 +42,8 @@ function FitBounds({ vessels }) {
 
 export default function FleetMap() {
   const [selected, setSelected] = useState(null)
+  const [briefing, setBriefing] = useState('')
+  const [briefingLoading, setBriefingLoading] = useState(false)
 
   return (
     <div style={{ display:'flex', flexDirection:'column', gap:16 }}>
@@ -122,9 +125,17 @@ export default function FleetMap() {
                         </div>
                       ))}
                     </div>
-                    <div style={{ marginTop:10, padding:'6px 10px', background:'rgba(201,164,87,0.1)', borderRadius:5, border:'1px solid rgba(201,164,87,0.3)', fontSize:11, color:C.gold, textAlign:'center', cursor:'pointer' }}>
+                    <div style={{ marginTop:10, padding:'6px 10px', background:'rgba(201,164,87,0.1)', borderRadius:5, border:'1px solid rgba(201,164,87,0.3)', fontSize:11, color:C.gold, textAlign:'center', cursor:'pointer' }}
+                      onClick={async () => {
+                        setBriefingLoading(true)
+                        const result = await generateVesselBriefing(v)
+                        setBriefing(result)
+                        setBriefingLoading(false)
+                      }}>
                       ★ Generate Vessel Briefing →
                     </div>
+                    {briefingLoading && <div style={{marginTop:8, fontSize:11, color:C.textMuted}}>Generating briefing...</div>}
+                    {briefing && <div style={{marginTop:8, fontSize:11, color:C.textSub, whiteSpace:'pre-wrap', lineHeight:1.6}}>{briefing}</div>}
                   </div>
                 </Popup>
               </Marker>
