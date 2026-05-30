@@ -57,6 +57,7 @@ export default function App() {
 
   const dateStr = now.toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'})
   const timeStr = now.toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'})
+  const tzStr   = now.toLocaleTimeString('en-GB',{timeZoneName:'short'}).split(' ').pop()
 
   return (
     <div style={{ background:C.bg, minHeight:'100vh', color:C.text }}>
@@ -67,6 +68,7 @@ export default function App() {
         actionItemCount={criticalCount}
         collapsed={sidebarCollapsed}
         onToggleCollapse={()=>setSidebarCollapsed(p=>!p)}
+        onAssistantClick={()=>setAssistant(p=>!p)}
       />
 
       <div className={`app-shell${sidebarCollapsed?' app-shell--collapsed':''}`}>
@@ -91,7 +93,7 @@ export default function App() {
             </div>
           </div>
           <div style={{ display:'flex',alignItems:'center',gap:10 }}>
-            <div style={{ fontSize:12,color:C.textMuted }}>{dateStr} · {timeStr} GST</div>
+            <div style={{ fontSize:12,color:C.textMuted }}>{dateStr} · {timeStr} {tzStr}</div>
             <div style={{ display:'flex',alignItems:'center',gap:6,background:C.greenDim,border:`1px solid ${C.green}44`,borderRadius:20,padding:'5px 14px' }}>
               <span className="pulse-green" style={{ width:6,height:6,borderRadius:'50%',background:C.green,display:'inline-block' }}/>
               <span style={{ fontSize:10,fontWeight:700,color:C.green,letterSpacing:'0.06em' }}>6 SYSTEMS LIVE</span>

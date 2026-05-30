@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import '../../styles/base.css'
 import { TAB_GROUPS } from '../data/tabs.js'
 
-export default function Sidebar({ activeTab, onTabChange, actionItemCount=0, collapsed, onToggleCollapse }){
+export default function Sidebar({ activeTab, onTabChange, actionItemCount=0, collapsed, onToggleCollapse, onAssistantClick }){
 
   useEffect(()=>{
     const w = collapsed ? '64px' : '220px'
@@ -53,6 +53,7 @@ export default function Sidebar({ activeTab, onTabChange, actionItemCount=0, col
       <div className="sidebar__bottom">
         <button
           className={`sidebar__ai-btn${actionItemCount>0 ? ' sidebar__ai-btn--pulse':''}`}
+          onClick={onAssistantClick}
         >
           ✦ {collapsed ? '' : 'AI Assistant'}
         </button>

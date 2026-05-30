@@ -147,7 +147,8 @@ function SituationRoom({ onNavigate, now }) {
   const greeting = hour < 12 ? 'Good Morning' : hour < 17 ? 'Good Afternoon' : 'Good Evening'
   const dateStr = now.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })
   const timeStr = now.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' })
-
+  const tzStr   = now.toLocaleTimeString('en-GB', { timeZoneName: 'short' }).split(' ').pop()
+  
   const domains = [
     { icon: '⚓', label: 'Fleet',   status: avgUtil >= 85 ? 'green' : avgUtil >= 75 ? 'amber' : 'red', val: avgUtil + '%',        sub: 'utilisation',  tab: 'fleet'   },
     { icon: '⊞', label: 'Finance', status: 'green',                                                     val: '$' + totalRev + 'M', sub: 'revenue MTD',  tab: 'finance' },
@@ -159,7 +160,7 @@ function SituationRoom({ onNavigate, now }) {
     <div style={{ paddingBottom: 8 }}>
       <div style={{ padding: '20px 20px 0', marginBottom: 18 }}>
         <div style={{ fontSize: 11, fontWeight: 700, color: M.muted, letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 4 }}>
-          {greeting} — {dateStr} · {timeStr} GST
+          {greeting} — {dateStr} · {timeStr} {tzStr}
         </div>
         <div style={{ fontFamily: "'Playfair Display',serif", fontSize: 22, fontWeight: 600, color: M.text }}>Goodearth Maritime</div>
         <div style={{ fontSize: 12, color: M.sub, marginTop: 2 }}>Chairman's Intelligence Dashboard</div>

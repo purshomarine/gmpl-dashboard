@@ -16,7 +16,7 @@ export default function Overview() {
         <div style={{ display:'flex', justifyContent:'space-between', alignItems:'flex-start', flexWrap:'wrap', gap:16, marginBottom:20 }}>
           <div>
             <div style={{ fontSize:10, fontWeight:600, color:C.gold, letterSpacing:'0.12em', marginBottom:4 }}>GOOD EARTH MARITIME — GROUP PERFORMANCE · MAY 2026</div>
-            <div style={{ fontFamily:"'Playfair Display', serif", fontSize:13, color:C.textSub }}>Chairman's Morning Briefing · 13 May 2026</div>
+            <div style={{ fontFamily:"'Playfair Display', serif", fontSize:13, color:C.textSub }}>{'Chairman\'s Morning Briefing · ' + new Date().toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'})}</div>
           </div>
           <div style={{ display:'flex', alignItems:'center', gap:8, background:C.greenDim, border:`1px solid ${C.green}44`, borderRadius:20, padding:'5px 14px' }}>
             <StatusDot s="green" animate size={7}/>
@@ -45,7 +45,7 @@ export default function Overview() {
           <div style={{ width:28, height:28, borderRadius:6, background:`linear-gradient(135deg, ${C.gold}, ${C.goldLight})`, display:'flex', alignItems:'center', justifyContent:'center', fontSize:14, color:C.bg }}>✦</div>
           <div>
             <div style={{ fontSize:12, fontWeight:700, color:C.gold }}>AI Chairman Briefing</div>
-            <div style={{ fontSize:10, color:C.textMuted }}>Generated 06:00 GST · Auto-refreshes daily</div>
+            <div style={{ fontSize:10, color:C.textMuted }}>Generated 06:00 {new Date().toLocaleTimeString('en-GB',{timeZoneName:'short'}).split(' ').pop()} · Auto-refreshes daily</div>
           </div>
         </div>
         <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fit, minmax(220px,1fr))', gap:16 }}>

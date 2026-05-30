@@ -313,9 +313,9 @@ export const HSE_INCIDENTS = [
 export const HSE_KPI = { LTIF:0.38, TRCF:1.62, nearMisses:4, openActions:2, auditScore:89, daysWithoutLTI:156, industryLTIF:0.68 }
 
 export const ALERTS = [
-  { id:'AL001', ts:'09:38 GST', level:'critical', msg:'MT Prelude — IOPP Certificate expires in 38 days. Renewal survey required immediately.',    vessel:'V001', dismissed:false },
-  { id:'AL002', ts:'08:15 GST', level:'high',     msg:'Pool transfer briefing unconfirmed — Maersk Tankers allocation date pending',               vessel:null,   dismissed:false },
-  { id:'AL003', ts:'08:00 GST', level:'high',     msg:'MT Prelude bunker RFQ not confirmed — 15 days to planned bunker date',                       vessel:'V001', dismissed:false },
+  { id:'AL001', ts:'09:38', level:'critical', msg:'MT Prelude — IOPP Certificate expires in 38 days. Renewal survey required immediately.',    vessel:'V001', dismissed:false },
+  { id:'AL002', ts:'08:15', level:'high',     msg:'Pool transfer briefing unconfirmed — Maersk Tankers allocation date pending',               vessel:null,   dismissed:false },
+  { id:'AL003', ts:'08:00', level:'high',     msg:'MT Prelude bunker RFQ not confirmed — 15 days to planned bunker date',                       vessel:'V001', dismissed:false },
   { id:'AL004', ts:'Yesterday', level:'medium',   msg:'Cosmos 4 & 5 utilisation below 85% target — review cargo schedule',                         vessel:null,   dismissed:false },
 ]
 
