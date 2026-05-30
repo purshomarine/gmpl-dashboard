@@ -1,4 +1,4 @@
-import { useState, lazy, Suspense } from 'react'
+import { useState, useEffect, lazy, Suspense } from 'react'
 import { C } from './components/ui.jsx'
 import { ALERTS } from './data/seed.js'
 import Sidebar from './components/Sidebar.jsx'
@@ -48,6 +48,15 @@ export default function App() {
   const [alert,            setAlert]            = useState(true)
   const [assistant,        setAssistant]        = useState(false)
   const [sidebarCollapsed, setSidebarCollapsed] = useState(false)
+  const [now,              setNow]              = useState(new Date())
+
+  useEffect(()=>{
+    const t = setInterval(()=>setNow(new Date()), 60000)
+    return ()=>clearInterval(t)
+  },[])
+
+  const dateStr = now.toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'})
+  const timeStr = now.toLocaleTimeString('en-GB',{hour:'2-digit',minute:'2-digit'})
 
   return (
     <div style={{ background:C.bg, minHeight:'100vh', color:C.text }}>
@@ -75,14 +84,14 @@ export default function App() {
 
         <div style={{ background:`linear-gradient(180deg,#0A1C32,#0C1E34)`, borderBottom:`1px solid ${C.border}`, padding:'0 24px', height:60, display:'flex', alignItems:'center', justifyContent:'space-between', gap:10, flexWrap:'wrap' }}>
           <div style={{ display:'flex', alignItems:'center', gap:14 }}>
-            <div className="glow-gold" style={{ width:38,height:38,background:`linear-gradient(135deg,${C.gold},${C.goldL})`,borderRadius:9,display:'flex',alignItems:'center',justifyContent:'center',fontFamily:"'Playfair Display',serif",fontWeight:700,fontSize:17,color:C.bg,flexShrink:0 }}>G</div>
+            <div className="glow-gold" style={{ width:38,height:38,background:`linear-gradient(135deg,${C.gold},${C.goldLight})`,borderRadius:9,display:'flex',alignItems:'center',justifyContent:'center',fontFamily:"'Playfair Display',serif",fontWeight:700,fontSize:17,color:C.bg,flexShrink:0 }}>G</div>
             <div>
               <div style={{ fontFamily:"'Playfair Display',serif",fontSize:15,fontWeight:600,color:C.text,letterSpacing:'0.03em' }}>Goodearth Maritime</div>
               <div style={{ fontSize:10,fontWeight:700,color:C.textMuted,letterSpacing:'0.12em',textTransform:'uppercase' }}>Chairman's Executive Intelligence Dashboard</div>
             </div>
           </div>
           <div style={{ display:'flex',alignItems:'center',gap:10 }}>
-            <div style={{ fontSize:12,color:C.textMuted }}>16 May 2026 · GST</div>
+            <div style={{ fontSize:12,color:C.textMuted }}>{dateStr} · {timeStr} GST</div>
             <div style={{ display:'flex',alignItems:'center',gap:6,background:C.greenDim,border:`1px solid ${C.green}44`,borderRadius:20,padding:'5px 14px' }}>
               <span className="pulse-green" style={{ width:6,height:6,borderRadius:'50%',background:C.green,display:'inline-block' }}/>
               <span style={{ fontSize:10,fontWeight:700,color:C.green,letterSpacing:'0.06em' }}>6 SYSTEMS LIVE</span>

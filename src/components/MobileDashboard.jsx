@@ -12,7 +12,6 @@ import {
 } from '../data/seed.js'
 import { chatWithAssistant } from '../lib/claude.js'
 
-// ─── Mobile Design Tokens ───────────────────────────────────────────────────
 const M = {
   bg:       '#091828',
   card:     '#112236',
@@ -36,8 +35,6 @@ const M = {
 }
 
 const SC = { green: M.green, amber: M.amber, red: M.red }
-
-// ─── Utility Components ──────────────────────────────────────────────────────
 
 function Dot({ s, size = 8, pulse }) {
   return (
@@ -86,7 +83,6 @@ function BigNum({ value, label, color, sub }) {
   )
 }
 
-// Ring/donut for utilisation
 function Ring({ value, max = 100, size = 70, color, label, sub }) {
   const pct = Math.min((value / max) * 100, 100)
   const r = (size / 2) - 7
@@ -113,7 +109,6 @@ function Ring({ value, max = 100, size = 70, color, label, sub }) {
   )
 }
 
-// Bottom sheet overlay
 function Sheet({ title, children, onClose }) {
   return (
     <div style={{
@@ -128,7 +123,6 @@ function Sheet({ title, children, onClose }) {
         boxShadow: '0 -8px 40px rgba(0,0,0,0.6)',
         animation: 'fade-up 0.25s ease',
       }}>
-        {/* Handle */}
         <div style={{ display: 'flex', justifyContent: 'center', padding: '12px 0 4px' }}>
           <div style={{ width: 36, height: 4, background: M.border, borderRadius: 2 }}/>
         </div>
@@ -142,34 +136,35 @@ function Sheet({ title, children, onClose }) {
   )
 }
 
-// ─── TAB: SITUATION ROOM ─────────────────────────────────────────────────────
-
-function SituationRoom({ onNavigate }) {
+function SituationRoom({ onNavigate, now }) {
   const totalRev = VERTICALS.reduce((s, v) => s + v.rev, 0).toFixed(1)
   const totalEbitda = VERTICALS.reduce((s, v) => s + v.ebitda, 0).toFixed(1)
   const avgUtil = Math.round(VESSELS.reduce((s, v) => s + v.util, 0) / VESSELS.length)
   const redCount = RED_FLAGS.filter(f => f.status === 'red').length
-  const legalExp = (LEGAL_MATTERS.reduce((s, m) => s + m.exp, 0) / 1e6).toFixed(1)
   const activeDeals = ACTIVE_DEALS.filter(d => d.status === 'active').length
 
+  const hour = now.getHours()
+  const greeting = hour < 12 ? 'Good Morning' : hour < 17 ? 'Good Afternoon' : 'Good Evening'
+  const dateStr = now.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })
+  const timeStr = now.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' })
+
   const domains = [
-    { icon: '⚓', label: 'Fleet',    status: avgUtil >= 85 ? 'green' : avgUtil >= 75 ? 'amber' : 'red',   val: avgUtil + '%',  sub: 'utilisation',  tab: 'fleet'   },
-    { icon: '⊞',  label: 'Finance',  status: 'green',                                                       val: '$' + totalRev + 'M', sub: 'revenue MTD', tab: 'finance' },
-    { icon: '⚖',  label: 'Risk',     status: redCount > 3 ? 'red' : redCount > 0 ? 'amber' : 'green',      val: String(redCount),sub: 'red flags',   tab: 'risk'    },
-    { icon: '◈',  label: 'Deals',    status: 'amber',                                                        val: String(activeDeals), sub: 'in progress', tab: 'deals'  },
+    { icon: '⚓', label: 'Fleet',   status: avgUtil >= 85 ? 'green' : avgUtil >= 75 ? 'amber' : 'red', val: avgUtil + '%',        sub: 'utilisation',  tab: 'fleet'   },
+    { icon: '⊞', label: 'Finance', status: 'green',                                                     val: '$' + totalRev + 'M', sub: 'revenue MTD',  tab: 'finance' },
+    { icon: '⚖', label: 'Risk',    status: redCount > 3 ? 'red' : redCount > 0 ? 'amber' : 'green',    val: String(redCount),     sub: 'red flags',    tab: 'risk'    },
+    { icon: '◈', label: 'Deals',   status: 'amber',                                                      val: String(activeDeals),  sub: 'in progress',  tab: 'deals'   },
   ]
 
   return (
     <div style={{ paddingBottom: 8 }}>
-
-      {/* Date + greeting */}
       <div style={{ padding: '20px 20px 0', marginBottom: 18 }}>
-        <div style={{ fontSize: 11, fontWeight: 700, color: M.muted, letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 4 }}>Good Morning — 13 May 2026</div>
+        <div style={{ fontSize: 11, fontWeight: 700, color: M.muted, letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 4 }}>
+          {greeting} — {dateStr} · {timeStr} GST
+        </div>
         <div style={{ fontFamily: "'Playfair Display',serif", fontSize: 22, fontWeight: 600, color: M.text }}>Goodearth Maritime</div>
         <div style={{ fontSize: 12, color: M.sub, marginTop: 2 }}>Chairman's Intelligence Dashboard</div>
       </div>
 
-      {/* P&L Hero */}
       <div style={{ margin: '0 16px 16px', background: `linear-gradient(135deg, #0E2240 0%, #142E4A 100%)`, borderRadius: 18, padding: '20px', border: `1px solid rgba(212,172,90,0.25)`, position: 'relative', overflow: 'hidden' }}>
         <div style={{ position: 'absolute', top: -30, right: -30, width: 120, height: 120, borderRadius: '50%', background: 'radial-gradient(circle, rgba(212,172,90,0.1) 0%, transparent 70%)' }}/>
         <div style={{ fontSize: 10, fontWeight: 700, color: M.gold, letterSpacing: '0.12em', marginBottom: 12 }}>GROUP P&L THIS MONTH</div>
@@ -182,7 +177,6 @@ function SituationRoom({ onNavigate }) {
         </div>
       </div>
 
-      {/* Domain status grid */}
       <div style={{ padding: '0 16px', marginBottom: 16 }}>
         <div style={{ fontSize: 11, fontWeight: 700, color: M.muted, letterSpacing: '0.09em', textTransform: 'uppercase', marginBottom: 10 }}>Domain Status</div>
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 10 }}>
@@ -204,7 +198,6 @@ function SituationRoom({ onNavigate }) {
         </div>
       </div>
 
-      {/* Revenue sparkline */}
       <div style={{ margin: '0 16px 16px' }}>
         <MCard>
           <div style={{ fontSize: 11, fontWeight: 700, color: M.muted, letterSpacing: '0.09em', textTransform: 'uppercase', marginBottom: 10 }}>Revenue Trend — 12 Months</div>
@@ -224,18 +217,17 @@ function SituationRoom({ onNavigate }) {
         </MCard>
       </div>
 
-      {/* AI Briefing */}
       <div style={{ margin: '0 16px 16px' }}>
         <MCard accent={M.gold}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 12 }}>
             <div style={{ width: 28, height: 28, background: `linear-gradient(135deg,${M.gold},#E8C97A)`, borderRadius: 8, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 13, color: '#071120', fontWeight: 800 }}>✦</div>
-            <div style={{ fontSize: 12, fontWeight: 700, color: M.gold }}>AI Briefing — This Morning</div>
+            <div style={{ fontSize: 12, fontWeight: 700, color: M.gold }}>AI Briefing — {greeting.split(' ')[1]}</div>
           </div>
           {[
-            { c: M.red,   icon: '⚠', txt: 'MV Saffron Star SMC expires 11 days — immediate approval needed' },
-            { c: M.amber, icon: '◎', txt: 'Petrochemical Corp arbitration 14 Jun — briefing unconfirmed' },
-            { c: M.green, icon: '✓', txt: 'Fleet utilisation 82% — 3rd consecutive month above 80% target' },
-            { c: M.blue,  icon: '↗', txt: 'Baltic Dry +3.2% — chemical tanker demand strengthening Gulf' },
+            { c: M.red,   icon: '⚠', txt: 'MT Prelude IOPP certificate expires in 38 days — renewal survey required immediately' },
+            { c: M.amber, icon: '◎', txt: 'Petrochemical Corp arbitration 14 Jun — Hill Dickinson briefing still unconfirmed' },
+            { c: M.green, icon: '✓', txt: 'Fleet utilisation 87% — above 80% target for third consecutive month' },
+            { c: M.blue,  icon: '↗', txt: 'Baltic Clean Tanker Index +1.8% — product tanker demand strengthening in Arabian Gulf' },
           ].map((b, i) => (
             <div key={i} style={{ display: 'flex', gap: 10, marginBottom: 10, alignItems: 'flex-start' }}>
               <span style={{ color: b.c, fontSize: 14, marginTop: 1, flexShrink: 0 }}>{b.icon}</span>
@@ -245,7 +237,6 @@ function SituationRoom({ onNavigate }) {
         </MCard>
       </div>
 
-      {/* Critical items */}
       <div style={{ padding: '0 16px', marginBottom: 8 }}>
         <div style={{ fontSize: 11, fontWeight: 700, color: M.muted, letterSpacing: '0.09em', textTransform: 'uppercase', marginBottom: 10 }}>Decisions Required Today</div>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
@@ -262,7 +253,6 @@ function SituationRoom({ onNavigate }) {
         </div>
       </div>
 
-      {/* Market data */}
       <div style={{ padding: '0 16px', marginBottom: 8 }}>
         <div style={{ fontSize: 11, fontWeight: 700, color: M.muted, letterSpacing: '0.09em', textTransform: 'uppercase', marginBottom: 10, marginTop: 16 }}>Live Market</div>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
@@ -281,15 +271,12 @@ function SituationRoom({ onNavigate }) {
   )
 }
 
-// ─── TAB: FLEET ──────────────────────────────────────────────────────────────
-
 function FleetTab() {
   const [selected, setSelected] = useState(null)
   const scrollRef = useRef(null)
   const avgUtil = Math.round(VESSELS.reduce((s, v) => s + v.util, 0) / VESSELS.length)
   const totalPL = VESSELS.reduce((s, v) => s + v.pl, 0)
   const onHire  = VESSELS.filter(v => v.util > 0).length
-
   const STATUS_EMOJI = { green: '🟢', amber: '🟡', red: '🔴' }
 
   return (
@@ -298,8 +285,6 @@ function FleetTab() {
         <div style={{ fontSize: 11, fontWeight: 700, color: M.muted, letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 4 }}>Fleet Operations</div>
         <div style={{ fontFamily: "'Playfair Display',serif", fontSize: 22, fontWeight: 600, color: M.text }}>Maritime</div>
       </div>
-
-      {/* Fleet health rings */}
       <div style={{ margin: '0 16px 16px', background: `linear-gradient(135deg, #0E2240, #122A42)`, borderRadius: 18, padding: '18px 16px', border: `1px solid ${M.border}` }}>
         <div style={{ display: 'flex', justifyContent: 'space-around', alignItems: 'center' }}>
           <Ring value={avgUtil} color={avgUtil >= 85 ? M.green : M.amber} label="Utilisation"/>
@@ -324,20 +309,13 @@ function FleetTab() {
           </div>
         </div>
       </div>
-
-      {/* Vessel cards — scrollable horizontal */}
       <div style={{ padding: '0 16px', marginBottom: 4 }}>
         <div style={{ fontSize: 11, fontWeight: 700, color: M.muted, letterSpacing: '0.09em', textTransform: 'uppercase', marginBottom: 10 }}>Vessels — Tap to Drill Down</div>
       </div>
       <div ref={scrollRef} style={{ paddingBottom: 4 }}>
         {VESSELS.map(v => (
           <div key={v.id} style={{ margin: '0 16px 10px' }}>
-            <div onClick={() => setSelected(v)} style={{
-              background: M.card, borderRadius: 14, padding: '14px 16px',
-              border: `1px solid ${SC[v.status]}33`,
-              borderLeft: `4px solid ${SC[v.status]}`,
-              cursor: 'pointer',
-            }}>
+            <div onClick={() => setSelected(v)} style={{ background: M.card, borderRadius: 14, padding: '14px 16px', border: `1px solid ${SC[v.status]}33`, borderLeft: `4px solid ${SC[v.status]}`, cursor: 'pointer' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 10 }}>
                 <div>
                   <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 3 }}>
@@ -351,7 +329,6 @@ function FleetTab() {
                   <div style={{ fontSize: 10, color: M.muted }}>P&L MTD</div>
                 </div>
               </div>
-              {/* Utilisation bar */}
               <div style={{ marginBottom: 10 }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: 5 }}>
                   <span style={{ fontSize: 11, color: M.muted }}>Utilisation</span>
@@ -371,8 +348,6 @@ function FleetTab() {
           </div>
         ))}
       </div>
-
-      {/* Certificate expiry */}
       <div style={{ padding: '8px 16px', marginBottom: 8 }}>
         <div style={{ fontSize: 11, fontWeight: 700, color: M.muted, letterSpacing: '0.09em', textTransform: 'uppercase', marginBottom: 10 }}>Certificate Expiry — 90 Days</div>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
@@ -390,8 +365,6 @@ function FleetTab() {
           ))}
         </div>
       </div>
-
-      {/* Vessel drill-through sheet */}
       {selected && (
         <Sheet title={selected.name} onClose={() => setSelected(null)}>
           <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginBottom: 16 }}>
@@ -427,8 +400,6 @@ function FleetTab() {
   )
 }
 
-// ─── TAB: FINANCE ────────────────────────────────────────────────────────────
-
 function FinanceTab() {
   const totalRev    = VERTICALS.reduce((s, v) => s + v.rev, 0)
   const totalEbitda = VERTICALS.reduce((s, v) => s + v.ebitda, 0)
@@ -440,8 +411,6 @@ function FinanceTab() {
         <div style={{ fontSize: 11, fontWeight: 700, color: M.muted, letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 4 }}>Zoho ERP · Finance</div>
         <div style={{ fontFamily: "'Playfair Display',serif", fontSize: 22, fontWeight: 600, color: M.text }}>Group Financials</div>
       </div>
-
-      {/* Hero numbers */}
       <div style={{ margin: '0 16px 16px', background: `linear-gradient(135deg, #0E2240, #122A42)`, borderRadius: 18, padding: '20px', border: `1px solid ${M.border}` }}>
         <div style={{ display: 'flex', justifyContent: 'space-around' }}>
           <BigNum value={`$${totalRev.toFixed(1)}M`} label="Revenue" color={M.gold} sub="+4.2% MoM"/>
@@ -449,8 +418,6 @@ function FinanceTab() {
           <BigNum value={`$${totalEbitda.toFixed(1)}M`} label="EBITDA" color={M.green} sub={((totalEbitda/totalRev)*100).toFixed(0)+'% margin'}/>
         </div>
       </div>
-
-      {/* Revenue donut */}
       <div style={{ margin: '0 16px 16px' }}>
         <MCard>
           <div style={{ fontSize: 11, fontWeight: 700, color: M.muted, letterSpacing: '0.09em', textTransform: 'uppercase', marginBottom: 12 }}>Revenue by Vertical</div>
@@ -477,8 +444,6 @@ function FinanceTab() {
           </div>
         </MCard>
       </div>
-
-      {/* Vertical cards */}
       <div style={{ padding: '0 16px', marginBottom: 8 }}>
         <div style={{ fontSize: 11, fontWeight: 700, color: M.muted, letterSpacing: '0.09em', textTransform: 'uppercase', marginBottom: 10 }}>Vertical Breakdown</div>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
@@ -512,8 +477,6 @@ function FinanceTab() {
           ))}
         </div>
       </div>
-
-      {/* Connectors status */}
       <div style={{ padding: '8px 16px', marginBottom: 8 }}>
         <div style={{ fontSize: 11, fontWeight: 700, color: M.muted, letterSpacing: '0.09em', textTransform: 'uppercase', marginBottom: 10 }}>System Connections</div>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
@@ -533,13 +496,11 @@ function FinanceTab() {
   )
 }
 
-// ─── TAB: RISK ───────────────────────────────────────────────────────────────
-
 function RiskTab() {
   const [expanded, setExpanded] = useState(null)
-  const redFlags = RED_FLAGS.filter(f => f.status === 'red')
+  const redFlags   = RED_FLAGS.filter(f => f.status === 'red')
   const amberFlags = RED_FLAGS.filter(f => f.status === 'amber')
-  const totalExp = LEGAL_MATTERS.reduce((s, m) => s + m.exp, 0)
+  const totalExp   = LEGAL_MATTERS.reduce((s, m) => s + m.exp, 0)
 
   return (
     <div style={{ paddingBottom: 8 }}>
@@ -547,8 +508,6 @@ function RiskTab() {
         <div style={{ fontSize: 11, fontWeight: 700, color: M.muted, letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 4 }}>Legal · Compliance · HSE</div>
         <div style={{ fontFamily: "'Playfair Display',serif", fontSize: 22, fontWeight: 600, color: M.text }}>Risk &amp; Red Flags</div>
       </div>
-
-      {/* Risk summary */}
       <div style={{ margin: '0 16px 16px', borderRadius: 18, padding: '18px', background: `linear-gradient(135deg, #1A0808, #2A0E14)`, border: `1px solid ${M.red}33` }}>
         <div style={{ display: 'flex', justifyContent: 'space-around' }}>
           <BigNum value={String(redFlags.length)} label="Red Flags" color={M.red}/>
@@ -558,8 +517,6 @@ function RiskTab() {
           <BigNum value={`$${(totalExp / 1e6).toFixed(1)}M`} label="Legal Exp." color={M.text}/>
         </div>
       </div>
-
-      {/* Red flags */}
       <div style={{ padding: '0 16px', marginBottom: 16 }}>
         <div style={{ fontSize: 11, fontWeight: 700, color: M.muted, letterSpacing: '0.09em', textTransform: 'uppercase', marginBottom: 10 }}>Active Red Flags</div>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
@@ -586,8 +543,6 @@ function RiskTab() {
           ))}
         </div>
       </div>
-
-      {/* Legal matters */}
       <div style={{ padding: '0 16px', marginBottom: 16 }}>
         <div style={{ fontSize: 11, fontWeight: 700, color: M.muted, letterSpacing: '0.09em', textTransform: 'uppercase', marginBottom: 10 }}>Active Legal Matters</div>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
@@ -611,8 +566,6 @@ function RiskTab() {
           ))}
         </div>
       </div>
-
-      {/* HSE quick view */}
       <div style={{ padding: '0 16px', marginBottom: 8 }}>
         <div style={{ fontSize: 11, fontWeight: 700, color: M.muted, letterSpacing: '0.09em', textTransform: 'uppercase', marginBottom: 10 }}>HSE Performance</div>
         <MCard>
@@ -620,9 +573,9 @@ function RiskTab() {
             <Ring value={Math.round((1 - HSE_KPI.LTIF / 2) * 100)} color={M.green} label="Safety" size={70}/>
             <div>
               {[
-                { l: 'LTIF', v: String(HSE_KPI.LTIF), c: M.green, note: 'vs 0.68 industry' },
-                { l: 'Days LTI-Free', v: String(HSE_KPI.daysWithoutLTI), c: M.green },
-                { l: 'Open Actions', v: String(HSE_KPI.openActions), c: HSE_KPI.openActions > 0 ? M.amber : M.green },
+                { l: 'LTIF',         v: String(HSE_KPI.LTIF),          c: M.green, note: 'vs 0.68 industry' },
+                { l: 'Days LTI-Free',v: String(HSE_KPI.daysWithoutLTI),c: M.green },
+                { l: 'Open Actions', v: String(HSE_KPI.openActions),    c: HSE_KPI.openActions > 0 ? M.amber : M.green },
               ].map(r => (
                 <div key={r.l} style={{ marginBottom: 8 }}>
                   <span style={{ fontSize: 11, color: M.muted }}>{r.l}: </span>
@@ -638,12 +591,10 @@ function RiskTab() {
   )
 }
 
-// ─── TAB: DEALS ──────────────────────────────────────────────────────────────
-
 function DealsTab() {
   const [selected, setSelected] = useState(null)
   const totalSize = ACTIVE_DEALS.reduce((s, d) => s + d.dealSize, 0)
-  const TYPE_COL = { 'Vessel Acquisition': M.gold, 'Newbuilding': M.green, 'Debt Financing': M.blue, 'Project Finance': M.purple }
+  const TYPE_COL  = { 'Vessel Acquisition': M.gold, 'Newbuilding': M.green, 'Debt Financing': M.blue, 'Project Finance': M.purple }
   const TYPE_ICON = { 'Vessel Acquisition': '⚓', 'Newbuilding': '🏗', 'Debt Financing': '🏦', 'Project Finance': '📊' }
 
   return (
@@ -652,8 +603,6 @@ function DealsTab() {
         <div style={{ fontSize: 11, fontWeight: 700, color: M.muted, letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 4 }}>M&A · Newbuilding · Finance</div>
         <div style={{ fontFamily: "'Playfair Display',serif", fontSize: 22, fontWeight: 600, color: M.text }}>Active Deals</div>
       </div>
-
-      {/* Summary */}
       <div style={{ margin: '0 16px 16px', background: `linear-gradient(135deg, #141C0E, #1C2A12)`, borderRadius: 18, padding: '18px', border: `1px solid ${M.green}22` }}>
         <div style={{ display: 'flex', justifyContent: 'space-around' }}>
           <BigNum value={`$${(totalSize / 1e6).toFixed(0)}M`} label="Pipeline" color={M.gold}/>
@@ -663,13 +612,11 @@ function DealsTab() {
           <BigNum value={`${(ACTIVE_DEALS.filter(d => d.projectIRR).reduce((s, d) => s + d.projectIRR, 0) / ACTIVE_DEALS.filter(d => d.projectIRR).length).toFixed(1)}%`} label="Avg IRR" color={M.green}/>
         </div>
       </div>
-
-      {/* Deal cards */}
       <div style={{ padding: '0 16px', marginBottom: 8 }}>
         <div style={{ fontSize: 11, fontWeight: 700, color: M.muted, letterSpacing: '0.09em', textTransform: 'uppercase', marginBottom: 10 }}>All Deals — Tap to Expand</div>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
           {ACTIVE_DEALS.map(deal => {
-            const col = TYPE_COL[deal.type] || M.gold
+            const col    = TYPE_COL[deal.type] || M.gold
             const isOpen = selected?.id === deal.id
             return (
               <div key={deal.id} onClick={() => setSelected(isOpen ? null : deal)} style={{ background: M.card, borderRadius: 14, padding: '16px', border: `1px solid ${col}33`, cursor: 'pointer' }}>
@@ -688,12 +635,10 @@ function DealsTab() {
                     <div style={{ fontSize: 10, color: M.muted }}>deal size</div>
                   </div>
                 </div>
-
-                {/* Financial metrics */}
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 6 }}>
                   {[
                     { l: 'Project IRR', v: deal.projectIRR ? deal.projectIRR + '%' : '—', c: deal.projectIRR > 15 ? M.green : M.amber },
-                    { l: 'Equity IRR',  v: deal.equityIRR  ? deal.equityIRR  + '%' : '—', c: deal.equityIRR > 20  ? M.green : M.amber },
+                    { l: 'Equity IRR',  v: deal.equityIRR  ? deal.equityIRR  + '%' : '—', c: deal.equityIRR  > 20 ? M.green : M.amber },
                     { l: 'Leverage',    v: deal.leverage   + '%',                           c: M.text },
                     { l: 'Equity Req.', v: `$${(deal.cashRequired / 1e6).toFixed(1)}M`,    c: M.amber },
                     { l: 'Debt',        v: `$${(deal.debt / 1e6).toFixed(1)}M`,            c: M.text },
@@ -705,7 +650,6 @@ function DealsTab() {
                     </div>
                   ))}
                 </div>
-
                 {isOpen && (
                   <div style={{ marginTop: 14, paddingTop: 14, borderTop: `1px solid ${M.border}` }}>
                     <div style={{ fontSize: 11, fontWeight: 700, color: col, letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: 8 }}>Purpose</div>
@@ -739,11 +683,9 @@ function DealsTab() {
   )
 }
 
-// ─── FLOATING AI ASSISTANT ───────────────────────────────────────────────────
-
 function MobileAssistant({ onClose }) {
   const [messages, setMessages] = useState([{ role: 'assistant', content: "Good morning. Ask me anything about GMPL — fleet status, financials, legal matters, or active deals." }])
-  const [input, setInput]       = useState('')
+  const [input,    setInput]    = useState('')
   const [thinking, setThinking] = useState(false)
   const bottomRef = useRef(null)
 
@@ -751,7 +693,7 @@ function MobileAssistant({ onClose }) {
 
   async function send() {
     if (!input.trim()) return
-    const msg = { role: 'user', content: input }
+    const msg  = { role: 'user', content: input }
     const hist = [...messages, msg]
     setMessages(hist); setInput(''); setThinking(true)
     const reply = await chatWithAssistant(messages, input)
@@ -761,7 +703,6 @@ function MobileAssistant({ onClose }) {
 
   return (
     <div style={{ position: 'fixed', inset: 0, zIndex: 300, background: M.bg, display: 'flex', flexDirection: 'column' }}>
-      {/* Header */}
       <div style={{ background: `linear-gradient(135deg, #0A1C32, #0F2444)`, borderBottom: `1px solid ${M.border}`, padding: '16px 20px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexShrink: 0 }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
           <div style={{ width: 34, height: 34, background: `linear-gradient(135deg,${M.gold},#E8C97A)`, borderRadius: 10, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 16, color: '#071120', fontWeight: 800 }}>✦</div>
@@ -772,29 +713,17 @@ function MobileAssistant({ onClose }) {
         </div>
         <button onClick={onClose} style={{ background: M.card, border: `1px solid ${M.border}`, color: M.muted, width: 32, height: 32, borderRadius: 16, fontSize: 18, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>×</button>
       </div>
-
-      {/* Quick prompts */}
       <div style={{ padding: '12px 16px', borderBottom: `1px solid ${M.border}`, flexShrink: 0 }}>
         <div style={{ display: 'flex', gap: 6, overflowX: 'auto', paddingBottom: 2 }}>
-          {['What needs my attention?', 'Saffron Star status?', 'Legal exposure?', 'Fleet utilisation?', 'Active deals IRR?'].map(q => (
+          {['What needs my attention?', 'MT Prelude status?', 'Legal exposure?', 'Fleet utilisation?', 'Active deals IRR?'].map(q => (
             <button key={q} onClick={() => setInput(q)} style={{ background: M.card, border: `1px solid ${M.border}`, color: M.sub, fontSize: 11, padding: '6px 12px', borderRadius: 20, whiteSpace: 'nowrap', fontFamily: 'inherit', flexShrink: 0 }}>{q}</button>
           ))}
         </div>
       </div>
-
-      {/* Messages */}
       <div style={{ flex: 1, overflowY: 'auto', padding: '16px' }}>
         {messages.map((m, i) => (
           <div key={i} style={{ display: 'flex', flexDirection: 'column', alignItems: m.role === 'user' ? 'flex-end' : 'flex-start', marginBottom: 12 }}>
-            <div style={{
-              maxWidth: '88%', padding: '12px 16px', borderRadius: 16,
-              background: m.role === 'user' ? M.goldDim : M.card,
-              border: `1px solid ${m.role === 'user' ? M.gold + '44' : M.border}`,
-              fontSize: 14, color: M.text, lineHeight: 1.75,
-              borderBottomRightRadius: m.role === 'user' ? 4 : 16,
-              borderBottomLeftRadius: m.role === 'assistant' ? 4 : 16,
-              whiteSpace: 'pre-wrap',
-            }}>{m.content}</div>
+            <div style={{ maxWidth: '88%', padding: '12px 16px', borderRadius: 16, background: m.role === 'user' ? M.goldDim : M.card, border: `1px solid ${m.role === 'user' ? M.gold + '44' : M.border}`, fontSize: 14, color: M.text, lineHeight: 1.75, borderBottomRightRadius: m.role === 'user' ? 4 : 16, borderBottomLeftRadius: m.role === 'assistant' ? 4 : 16, whiteSpace: 'pre-wrap' }}>{m.content}</div>
           </div>
         ))}
         {thinking && (
@@ -804,16 +733,9 @@ function MobileAssistant({ onClose }) {
         )}
         <div ref={bottomRef}/>
       </div>
-
-      {/* Input */}
       <div style={{ padding: '12px 16px', paddingBottom: 32, background: M.nav, borderTop: `1px solid ${M.border}`, flexShrink: 0 }}>
         <div style={{ display: 'flex', gap: 8 }}>
-          <input
-            value={input} onChange={e => setInput(e.target.value)}
-            onKeyDown={e => e.key === 'Enter' && send()}
-            placeholder="Ask about fleet, finance, deals…"
-            style={{ flex: 1, background: M.card, border: `1px solid ${M.border}`, borderRadius: 24, color: M.text, padding: '12px 18px', fontSize: 14, fontFamily: 'inherit', outline: 'none' }}
-          />
+          <input value={input} onChange={e => setInput(e.target.value)} onKeyDown={e => e.key === 'Enter' && send()} placeholder="Ask about fleet, finance, deals…" style={{ flex: 1, background: M.card, border: `1px solid ${M.border}`, borderRadius: 24, color: M.text, padding: '12px 18px', fontSize: 14, fontFamily: 'inherit', outline: 'none' }}/>
           <button onClick={send} style={{ width: 46, height: 46, background: `linear-gradient(135deg,${M.gold},#E8C97A)`, border: 'none', borderRadius: 23, color: '#071120', fontSize: 18, fontWeight: 700, display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>›</button>
         </div>
       </div>
@@ -821,25 +743,29 @@ function MobileAssistant({ onClose }) {
   )
 }
 
-// ─── MAIN MOBILE SHELL ───────────────────────────────────────────────────────
-
 const TABS = [
-  { k: 'home',    icon: '⌂',  label: 'Home'    },
-  { k: 'fleet',   icon: '⚓',  label: 'Fleet'   },
-  { k: 'finance', icon: '⊞',  label: 'Finance' },
-  { k: 'risk',    icon: '⚑',  label: 'Risk'    },
-  { k: 'deals',   icon: '◈',  label: 'Deals'   },
+  { k: 'home',    icon: '⌂', label: 'Home'    },
+  { k: 'fleet',   icon: '⚓', label: 'Fleet'   },
+  { k: 'finance', icon: '⊞', label: 'Finance' },
+  { k: 'risk',    icon: '⚑', label: 'Risk'    },
+  { k: 'deals',   icon: '◈', label: 'Deals'   },
 ]
 
 export default function MobileDashboard() {
   const [tab,       setTab]       = useState('home')
   const [assistant, setAssistant] = useState(false)
   const [alert,     setAlert]     = useState(true)
+  const [now,       setNow]       = useState(new Date())
+
+  useEffect(() => {
+    const t = setInterval(() => setNow(new Date()), 60000)
+    return () => clearInterval(t)
+  }, [])
 
   const redCount = RED_FLAGS.filter(f => f.status === 'red').length
 
   const screens = {
-    home:    <SituationRoom onNavigate={setTab}/>,
+    home:    <SituationRoom onNavigate={setTab} now={now}/>,
     fleet:   <FleetTab/>,
     finance: <FinanceTab/>,
     risk:    <RiskTab/>,
@@ -848,47 +774,24 @@ export default function MobileDashboard() {
 
   return (
     <div style={{ background: M.bg, minHeight: '100vh', color: M.text, fontFamily: "'DM Sans', sans-serif", position: 'relative' }}>
-
-      {/* Alert banner */}
       {alert && (
         <div style={{ background: `linear-gradient(90deg, #3D0A14, #5A0E1E)`, padding: '9px 16px', display: 'flex', alignItems: 'center', gap: 10, borderBottom: `1px solid ${M.red}44` }}>
           <span className="pulse-red" style={{ width: 7, height: 7, borderRadius: '50%', background: M.red, display: 'inline-block', flexShrink: 0 }}/>
-          <span style={{ fontSize: 12, color: '#FCA5A5', flex: 1, lineHeight: 1.4 }}>MV Saffron Star — SMC expires 11 days. Action required.</span>
+          <span style={{ fontSize: 12, color: '#FCA5A5', flex: 1, lineHeight: 1.4 }}>MT Prelude — IOPP Certificate expires in 38 days. Renewal survey required immediately.</span>
           <button onClick={() => setAlert(false)} style={{ background: 'none', border: 'none', color: '#FCA5A5', fontSize: 20, lineHeight: 1, flexShrink: 0, padding: '0 4px' }}>×</button>
         </div>
       )}
-
-      {/* Scrollable content */}
       <div style={{ paddingBottom: 82, overflowY: 'auto', minHeight: 'calc(100vh - 82px)' }}>
         {screens[tab]}
       </div>
-
-      {/* Floating AI button */}
       {!assistant && (
-        <button onClick={() => setAssistant(true)} style={{
-          position: 'fixed', right: 18, bottom: 92, zIndex: 100,
-          width: 52, height: 52, borderRadius: 26,
-          background: `linear-gradient(135deg,${M.gold},#E8C97A)`,
-          border: 'none', color: '#071120', fontSize: 20, fontWeight: 800,
-          boxShadow: '0 4px 20px rgba(212,172,90,0.4)',
-          display: 'flex', alignItems: 'center', justifyContent: 'center',
-        }}>✦</button>
+        <button onClick={() => setAssistant(true)} style={{ position: 'fixed', right: 18, bottom: 92, zIndex: 100, width: 52, height: 52, borderRadius: 26, background: `linear-gradient(135deg,${M.gold},#E8C97A)`, border: 'none', color: '#071120', fontSize: 20, fontWeight: 800, boxShadow: '0 4px 20px rgba(212,172,90,0.4)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>✦</button>
       )}
-
-      {/* Bottom navigation */}
-      <div style={{
-        position: 'fixed', bottom: 0, left: 0, right: 0, zIndex: 50,
-        background: M.nav, borderTop: `1px solid ${M.border}`,
-        display: 'flex', paddingBottom: 'env(safe-area-inset-bottom, 8px)',
-        boxShadow: '0 -4px 30px rgba(0,0,0,0.5)',
-      }}>
+      <div style={{ position: 'fixed', bottom: 0, left: 0, right: 0, zIndex: 50, background: M.nav, borderTop: `1px solid ${M.border}`, display: 'flex', paddingBottom: 'env(safe-area-inset-bottom, 8px)', boxShadow: '0 -4px 30px rgba(0,0,0,0.5)' }}>
         {TABS.map(t => {
           const isActive = tab === t.k
           return (
-            <button key={t.k} onClick={() => setTab(t.k)} style={{
-              flex: 1, padding: '10px 4px 8px', display: 'flex', flexDirection: 'column',
-              alignItems: 'center', gap: 3, background: 'none', border: 'none', position: 'relative',
-            }}>
+            <button key={t.k} onClick={() => setTab(t.k)} style={{ flex: 1, padding: '10px 4px 8px', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 3, background: 'none', border: 'none', position: 'relative' }}>
               <span style={{ fontSize: 20, opacity: isActive ? 1 : 0.45, transition: 'all 0.2s' }}>{t.icon}</span>
               <span style={{ fontSize: 10, fontWeight: isActive ? 700 : 400, color: isActive ? M.gold : M.muted, letterSpacing: '0.04em', transition: 'all 0.2s' }}>{t.label}</span>
               {isActive && <span style={{ position: 'absolute', bottom: 0, left: '50%', transform: 'translateX(-50%)', width: 20, height: 3, background: M.gold, borderRadius: '2px 2px 0 0' }}/>}
@@ -899,8 +802,6 @@ export default function MobileDashboard() {
           )
         })}
       </div>
-
-      {/* AI Assistant full screen */}
       {assistant && <MobileAssistant onClose={() => setAssistant(false)}/>}
     </div>
   )
