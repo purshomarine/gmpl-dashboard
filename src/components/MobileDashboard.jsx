@@ -716,7 +716,7 @@ function MobileAssistant({ onClose }) {
       </div>
       <div style={{ padding: '12px 16px', borderBottom: `1px solid ${M.border}`, flexShrink: 0 }}>
         <div style={{ display: 'flex', gap: 6, overflowX: 'auto', paddingBottom: 2 }}>
-          {['What needs my attention?', 'MT Prelude status?', 'Legal exposure?', 'Fleet utilisation?', 'Active deals IRR?'].map(q => (
+          {['What needs my attention?', 'MT Prelude status?', 'Legal exposure?', 'Cash and receivables?', 'Pool earnings?'].map(q => (
             <button key={q} onClick={() => setInput(q)} style={{ background: M.card, border: `1px solid ${M.border}`, color: M.sub, fontSize: 11, padding: '6px 12px', borderRadius: 20, whiteSpace: 'nowrap', fontFamily: 'inherit', flexShrink: 0 }}>{q}</button>
           ))}
         </div>
