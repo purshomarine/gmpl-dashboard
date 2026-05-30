@@ -77,7 +77,12 @@ export default function Overview() {
                 <StatusDot s={v.status} animate size={8}/>
               </div>
               <div style={{ fontFamily:"'Playfair Display', serif", fontSize:28, fontWeight:600, color:C.text, marginBottom:2 }}>${v.rev}M</div>
-              <div style={{ fontSize:11, color:C.textMuted, marginBottom:10 }}>Revenue · EBITDA <span style={{ color:C.green }}>${v.ebitda}M</span> · Margin {v.margin}%</div>
+              <div style={{ fontSize:11, color:C.textMuted, marginBottom:4 }}>Revenue · EBITDA <span style={{ color:C.green }}>${v.ebitda}M</span> · Margin {v.margin}%</div>
+              {v.variance != null && (
+                <div style={{ fontSize:11, fontWeight:600, color:v.variance >= 0 ? C.green : C.red, marginBottom:10 }}>
+                  {v.variance >= 0 ? '▲' : '▼'} ${Math.abs(v.variance).toFixed(1)}M vs ${v.budget}M budget ({v.variance >= 0 ? '+' : ''}{v.variancePct}%)
+                </div>
+              )}
               <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:6, marginBottom:10 }}>
                 <div style={{ background:C.cardAlt, borderRadius:6, padding:'7px 10px' }}>
                   <div style={{ fontSize:10, color:C.textMuted }}>Cash</div>

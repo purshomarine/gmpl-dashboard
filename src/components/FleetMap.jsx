@@ -107,6 +107,14 @@ export default function FleetMap() {
                         ['Defects', v.defects + ' open'],
                         ['Day Rate', v.dayRate?'$'+v.dayRate.toLocaleString()+'/day':'Idle'],
                         ['IMO', v.imo],
+                        ['Noon Position', v.latDisplay && v.lngDisplay ? v.latDisplay + ' / ' + v.lngDisplay : '—'],
+                        ['VLSFO ROB', v.rob_vlsfo ? v.rob_vlsfo + ' MT' : '—'],
+                        ['MDO ROB', v.rob_mdo ? v.rob_mdo + ' MT' : '—'],
+                        ['Next Port', v.nextPort || '—'],
+                        ['ETA', v.eta || '—'],
+                        ['H&M Insurer', v.insurer_hm || '—'],
+                        ['P&I Club', v.insurer_pi || '—'],
+                        ['Insured Value', v.insured_value ? '$' + (v.insured_value/1e6).toFixed(1) + 'M' : '—'],
                       ].map(([k,val]) => (
                         <div key={k} style={{ display:'contents' }}>
                           <span style={{ color:'#7A95B8', fontWeight:500 }}>{k}</span>

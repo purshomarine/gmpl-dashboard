@@ -43,16 +43,16 @@ function generateMockResponse(userMessage) {
 
   // Vessel specific
   if (q.includes('prelude')) {
-    return `**MT Prelude — Status Update**\n\nCurrently in the East Mediterranean, en route to Dortyol, Turkey. Earning $20,400/day in the Hafnia Pool (transferring to Maersk Tankers — allocation date still unconfirmed).\n\n**Requires immediate attention:**\n- IOPP Certificate expires in 38 days (20 Jun 2026) — renewal survey not yet booked\n- Bunker RFQ unconfirmed — 15 days to planned stem at Ras Tanura\n- Pool transfer to Maersk Tankers pending confirmation\n\nUtilisation: 88% | Open defects: 1`
+    return `**MT Prelude — Status Update**\n\nCurrently in the East Mediterranean, en route to Dortyol, Turkey. Earning $20,400/day in the Hafnia Pool (transferring to Maersk Tankers — allocation date still unconfirmed).\n\n**Requires immediate attention:**\n- IOPP Certificate expires in 38 days (20 Jun 2026) — renewal survey not yet booked\n- Bunker RFQ unconfirmed — 15 days to planned stem at Ras Tanura\n- Pool transfer to Maersk Tankers pending confirmation\n\nUtilisation: 88% | Open defects: 1\nBunkers on board: VLSFO 420 MT | MDO 38 MT\nNoon position: 36°14'N / 036°08'E\nNext port: Dortyol, Turkey | ETA: 02 Jun 2026\nInsurance: H&M Skuld | P&I UK P&I Club | LOH covered`
   }
   if (q.includes('anael')) {
-    return `**MT Anael — Status Update**\n\nCurrently at Conakry, Guinea on Atlantic voyage. Time Charter to Trafigura Pte Ltd at $19,500/day until Jan 2027.\n\nBest performing vessel on utilisation at 95%. No open defects. MLC Certificate expires 10 Jul 2026 — 58 days remaining.\n\nP&L MTD: +$312K`
+    return `**MT Anael — Status Update**\n\nCurrently at Conakry, Guinea on Atlantic voyage. Time Charter to Trafigura Pte Ltd at $19,500/day until Jan 2027.\n\nBest performing vessel on utilisation at 95%. No open defects. MLC Certificate expires 10 Jul 2026 — 58 days remaining.\n\nP&L MTD: +$312K\nBunkers on board: VLSFO 180 MT | MDO 22 MT\nNoon position: 09°31'N / 013°42'W\nNext port: Conakry, Guinea | ETA: 04 Jun 2026\nInsurance: H&M Norwegian Hull Club | P&I UK P&I Club`
   }
   if (q.includes('nura kara')) {
-    return `**MT Nura Kara — Status Update**\n\nCurrently on China Coast, en route Shanghai. Operating in Maersk Tankers Pool at $21,200/day — highest earner in the fleet.\n\nUtilisation: 92% | Open defects: 2 | Class renewal due 1 Aug 2026.\n\nP&L MTD: +$298K`
+    return `**MT Nura Kara — Status Update**\n\nCurrently on China Coast, en route Shanghai. Operating in Maersk Tankers Pool at $21,200/day — highest earner in the fleet.\n\nUtilisation: 92% | Open defects: 2 | Class renewal due 1 Aug 2026.\n\nP&L MTD: +$298K\nBunkers on board: VLSFO 310 MT | MDO 41 MT\nNoon position: 30°42'N / 122°24'E\nNext port: Shanghai, China | ETA: 08 Jun 2026\nInsurance: H&M Gard | P&I UK P&I Club`
   }
   if (q.includes('nura bright')) {
-    return `**MT Nura Bright — Status Update**\n\nCurrently on Indian Coast at slow speed (0.7 knots). Formerly ELVITA R. Operating on captive cargo programme for Archean Chemical salt exports.\n\nUtilisation: 82% | Open defects: 1 | Certificates current.\n\nP&L MTD: +$178K`
+    return `**MT Nura Bright — Status Update**\n\nCurrently on Indian Coast at slow speed (0.7 knots). Formerly ELVITA R. Operating on captive cargo programme for Archean Chemical salt exports.\n\nUtilisation: 82% | Open defects: 1 | Certificates current.\n\nP&L MTD: +$178K\nBunkers on board: VLSFO 95 MT | MDO 18 MT\nNoon position: 15°30'N / 073°48'E\nNext port: Mumbai, India | ETA: 03 Jun 2026\nInsurance: H&M Skuld | P&I UK P&I Club`
   }
 
   // Fleet overview
@@ -98,6 +98,11 @@ function generateMockResponse(userMessage) {
   // Crew
   if (q.includes('crew') || q.includes('master') || q.includes('captain') || q.includes('sign')) {
     return `**Crew Summary — All Vessels**\n\nMT Prelude: Master Capt. Ahmed Hassan (Egypt) | Sign-off Aug 2026 | 24 crew\nMT Anael: Master Capt. Pradeep Nair (India) | Certs expiring — relief sourcing | 23 crew\nMT Nura Kara: Master Capt. Liu Wei (China) | Sign-off Oct 2026 | 24 crew\nMT Nura Bright: Master Capt. K. Menon (India) | Sign-off Aug 2026 | 23 crew\nCosmos 1–5: Barge Masters | 8 crew each\n\nTotal crew on board: 131`
+  }
+
+  // Insurance
+  if (q.includes('insur') || q.includes('hull') || q.includes('p&i') || q.includes('loh')) {
+    return `**Fleet Insurance Summary — All 4 Tankers**\n\nH&M (Hull & Machinery):\n- MT Prelude: Skuld | Insured value $28.5M | Renewal 1 Aug 2026\n- MT Anael: Norwegian Hull Club | Insured value $30.2M | Renewal 15 Jan 2027\n- MT Nura Kara: Gard | Insured value $27.8M | Renewal 20 Mar 2027\n- MT Nura Bright: Skuld | Insured value $32.1M | Renewal 20 Apr 2027\n\nP&I (Protection & Indemnity):\n- All 4 tankers: UK P&I Club | Fleet entry | Renewal 20 Feb 2027\n\nLoss of Hire (LOH): Confirmed covered on all 4 vessels\n\nTotal fleet insured value: $118.6M\n\n⚠ MT Prelude H&M renewal due in 80 days — action required.`
   }
 
   // Default — morning briefing style
