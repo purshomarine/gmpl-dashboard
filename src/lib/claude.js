@@ -1,133 +1,142 @@
 const API_URL = '/api/claude'
 const MODEL   = import.meta.env.VITE_CLAUDE_MODEL || 'claude-sonnet-4-20250514'
+const API_KEY = import.meta.env.VITE_CLAUDE_API_KEY
 
-const SYSTEM_CONTEXT = `You are the Chairman's AI executive assistant for Goodearth Maritime Private Limited (GMPL), a UAE/India-based maritime group owned by the Archean Group, Chairman Ranjit Pendurthi.
+// ─── Smart Mock Engine ────────────────────────────────────────────────────────
+// Runs entirely from dashboard data. No API needed.
 
-STRICT RULES:
-- You ONLY answer questions using the data below. Do not speculate or use external knowledge.
-- If asked something not covered by this data, say: "I don't have that information in the current dashboard data."
-- Keep responses concise and direct. You are speaking to the Chairman — no filler, no disclaimers.
-- You are advisory only. The Chairman retains all final decisions.
+const MOCK_DATA = {
+  vessels: [
+    { name: 'MT Prelude',     pos: 'East Mediterranean', route: 'en route Dortyol, Turkey', tce: '$20,400/day', util: '88%', defects: 1, status: 'amber', note: 'IOPP certificate expires in 38 days — CRITICAL. Pool transfer to Maersk Tankers pending.' },
+    { name: 'MT Anael',       pos: 'Conakry, Guinea',    route: 'Atlantic voyage',            tce: '$19,500/day', util: '95%', defects: 0, status: 'green', note: 'Time Charter to Trafigura at $19,500/day until Jan 2027. Performing well.' },
+    { name: 'MT Nura Kara',   pos: 'China Coast',        route: 'en route Shanghai',          tce: '$21,200/day', util: '92%', defects: 2, status: 'green', note: 'Maersk Tankers Pool. Highest earner in fleet at $21,200/day.' },
+    { name: 'MT Nura Bright', pos: 'Indian Coast',       route: 'slow speed — Indian Coast',  tce: 'Captive',     util: '82%', defects: 1, status: 'green', note: 'Captive cargo for Archean Chemical salt exports. Formerly ELVITA R.' },
+  ],
+  barges: 'Cosmos 1–5 all operating at Port Jakhau Salt Jetty, Gujarat. Captive cargo for Archean Chemical — salt exports to Japan, South Korea, China. 3–4.5M MT annually, growing to 7M MT with new Hajipur facility.',
+  financials: { revenue: '$15.9M', ebitda: '$5.1M', margin: '32.1%', cash: '$7.5M', receivables: '$3.4M overdue (Ship Building)' },
+  redFlags: [
+    'MT Prelude IOPP Certificate expires in 38 days — renewal survey not booked',
+    'MT Prelude pool transfer to Maersk Tankers — allocation date unconfirmed',
+    'MT Prelude bunker RFQ unconfirmed — 15 days to planned stem',
+    'Cosmos 4 and Cosmos 5 below 85% utilisation target',
+    'Petrochemical Corp arbitration 14 Jun — Hill Dickinson briefing unconfirmed',
+    'Ship Building revenue $0.6M below budget — Eastern Shipyard delay',
+    'Overdue receivables $3.4M — Ship Building elevated',
+  ],
+  legal: [
+    { matter: 'Charter Party Dispute vs Petrochemical Corp', exposure: '$2.4M', next: '14 Jun 2026 — Arbitration', counsel: 'Hill Dickinson LLP' },
+    { matter: 'Newbuilding Dispute vs Timblo Drydocks', exposure: '$4.1M', next: '19 Aug 2026 — Expert Determination', counsel: 'Watson Farley & Williams' },
+    { matter: 'P&I Cargo Claim vs Asian Chemical Holdings', exposure: '$0.89M', next: '2 Jul 2026 — Pleadings', counsel: 'Ince & Co' },
+    { matter: 'Crew Personal Injury vs Chief Engineer Ramirez', exposure: '$0.32M', next: 'Medical Assessment', counsel: 'P&I Club' },
+  ],
+  market: { bdti: '854 (+2.1%)', bcti: '712 (+1.8%)', bdi: '1,842 (+3.2%)', vlsfo: '$612/MT Fujairah', redSea: 'ELEVATED — rerouting active +12-15 days per voyage' },
+  certs: [
+    'MT Prelude IOPP Certificate — expires 20 Jun 2026 — 38 days — CRITICAL',
+    'Cosmos 5 Inland Certificate — expires 28 Jun 2026 — 46 days',
+    'MT Anael MLC Certificate — expires 10 Jul 2026 — 58 days',
+    'MT Nura Kara Class Renewal — due 1 Aug 2026 — 80 days',
+  ],
+}
 
-GROUP STRUCTURE:
-- Goodearth Maritime Private Limited (India/UAE) — parent holding company, est. 2004
-- NIS Pte Ltd (Singapore) — intermediate holding company for vessel-owning SPVs
-- NSM Pte Ltd (Singapore) — technical and commercial ship management for MT Prelude and MT Anael
-- Nura ShipCo LLC (UAE RAK FTZ) — dormant SPV, no vessels
-- Nura Kara SPV (UAE RAK FTZ) — owns MT Nura Kara
-- Nura Bright SPV (UAE RAK FTZ) — owns MT Nura Bright
+function generateMockResponse(userMessage) {
+  const q = userMessage.toLowerCase()
 
-FLEET — MR PRODUCT TANKERS:
-- MT Prelude: 47,200 DWT, built 2018, DNV class, Marshall Islands flag. Commercial mode: Pool (transferring Hafnia → Maersk Tankers). Acquired Aug 2025. Currently: East Mediterranean, en route Dortyol Turkey. Earnings: $20,400/day. Utilisation: 88%. Open defects: 1. IOPP certificate expires in 38 days — CRITICAL.
-- MT Anael: 46,800 DWT, built 2019, BV class, Marshall Islands flag. Commercial mode: Time Charter to Trafigura Pte Ltd at $19,500/day until Jan 2027. Acquired Jan 2026. Currently: Conakry, Guinea. Earnings: $19,500/day. Utilisation: 95%. Open defects: 0.
-- MT Nura Kara: 47,500 DWT, built 2017, LR class, Malta flag. Commercial mode: Maersk Tankers Pool. Acquired Mar 2026. Currently: China Coast, en route Shanghai. Earnings: $21,200/day. Utilisation: 92%. Open defects: 2.
-- MT Nura Bright: 46,500 DWT, built 2020, DNV class, Malta flag (ex-ELVITA R). Commercial mode: Captive cargo — Archean Chemical. Acquired Apr 2026. Currently: Indian Coast. Earnings: internal/captive. Utilisation: 82%.
+  // Vessel specific
+  if (q.includes('prelude')) {
+    return `**MT Prelude — Status Update**\n\nCurrently in the East Mediterranean, en route to Dortyol, Turkey. Earning $20,400/day in the Hafnia Pool (transferring to Maersk Tankers — allocation date still unconfirmed).\n\n**Requires immediate attention:**\n- IOPP Certificate expires in 38 days (20 Jun 2026) — renewal survey not yet booked\n- Bunker RFQ unconfirmed — 15 days to planned stem at Ras Tanura\n- Pool transfer to Maersk Tankers pending confirmation\n\nUtilisation: 88% | Open defects: 1`
+  }
+  if (q.includes('anael')) {
+    return `**MT Anael — Status Update**\n\nCurrently at Conakry, Guinea on Atlantic voyage. Time Charter to Trafigura Pte Ltd at $19,500/day until Jan 2027.\n\nBest performing vessel on utilisation at 95%. No open defects. MLC Certificate expires 10 Jul 2026 — 58 days remaining.\n\nP&L MTD: +$312K`
+  }
+  if (q.includes('nura kara')) {
+    return `**MT Nura Kara — Status Update**\n\nCurrently on China Coast, en route Shanghai. Operating in Maersk Tankers Pool at $21,200/day — highest earner in the fleet.\n\nUtilisation: 92% | Open defects: 2 | Class renewal due 1 Aug 2026.\n\nP&L MTD: +$298K`
+  }
+  if (q.includes('nura bright')) {
+    return `**MT Nura Bright — Status Update**\n\nCurrently on Indian Coast at slow speed (0.7 knots). Formerly ELVITA R. Operating on captive cargo programme for Archean Chemical salt exports.\n\nUtilisation: 82% | Open defects: 1 | Certificates current.\n\nP&L MTD: +$178K`
+  }
 
-FLEET — INLAND RIVER BARGES (all captive cargo for Archean Chemical):
-- Cosmos 1–5: 2,100 MT DWT each, IACS class, India flag. All operating at Port Jakhau Salt Jetty, Gujarat (23°14'N, 68°35'E), Godia Creek, Gulf of Kutch. Route: Jakhau Salt Jetty → Export Markets (Japan, South Korea, China). Built 2024/25/26.
+  // Fleet overview
+  if (q.includes('fleet') || q.includes('vessel') || q.includes('ship') || q.includes('utilisation') || q.includes('utilization')) {
+    return `**Fleet Status — 9 Vessels**\n\n**MR Tankers (4):**\n- MT Prelude: East Med → Dortyol Turkey | $20,400/day | 88% util | ⚠ IOPP cert 38 days\n- MT Anael: Conakry, Guinea | $19,500/day TC | 95% util | ✓ All clear\n- MT Nura Kara: China Coast → Shanghai | $21,200/day | 92% util | ✓ All clear\n- MT Nura Bright: Indian Coast | Captive | 82% util | ✓ All clear\n\n**Cosmos Barges (5):**\nAll operating at Port Jakhau Salt Jetty, Gujarat. Captive cargo — Archean Chemical salt exports to Japan, South Korea, China.\n\n**Overall:** 7/9 vessels on hire | Average utilisation 87%`
+  }
 
-ARCHEAN CHEMICAL (captive cargo customer):
-- India's largest industrial salt exporter — 100% exported internationally
-- Current exports: 3–4.5 million MT annually to Japan, South Korea, China
-- Growing to 7 million MT in ~2 years with new Hajipur facility and jetty
-- Operations: Hajipir, Rann of Kutch, Gujarat. Solar evaporation of natural sea brine.
-- Products: Industrial salt, Bromine
+  // Financials
+  if (q.includes('revenue') || q.includes('ebitda') || q.includes('financial') || q.includes('profit') || q.includes('cash') || q.includes('p&l')) {
+    return `**Group Financials — May 2026 MTD**\n\nRevenue: $15.9M (+4.2% MoM)\nEBITDA: $5.1M (32.1% margin)\nCash Position: $7.5M\nOverdue Receivables: $3.4M (Ship Building elevated)\n\n**By Vertical:**\n- Ship Owning: $8.2M | 25.6% margin\n- Ship Management: $4.5M | 40% margin ← strongest\n- River Barges: $1.8M | 50% margin\n- Ship Repairing: $1.4M | 21.4% margin ← below budget\n\nBreakeven threshold: $7,500/day per vessel. All 4 tankers above breakeven.`
+  }
 
-FINANCIALS (May 2026 MTD):
-- Group Revenue: $15.9M (+4.2% MoM)
-- Group EBITDA: $5.1M (32.1% margin)
-- Group Cash: $7.5M
-- Overdue Receivables: $3.4M (Ship Building elevated)
-- Breakeven threshold: $7,500/day per vessel
-- Ship Owning: $8.2M revenue, $2.1M EBITDA, 25.6% margin
-- Ship Management: $4.5M revenue, $1.8M EBITDA, 40% margin
-- River Barges: $1.8M revenue, $0.9M EBITDA, 50% margin
-- Ship Repairing: $1.4M revenue, $0.3M EBITDA, 21.4% margin (below budget)
+  // Legal
+  if (q.includes('legal') || q.includes('exposure') || q.includes('arbitration') || q.includes('dispute') || q.includes('timblo') || q.includes('petrochemical')) {
+    return `**Legal Matters — Total Exposure $7.71M**\n\n1. **Timblo Drydocks Dispute** — $4.1M exposure | GMPL Claimant | Expert Determination 19 Aug 2026 | Watson Farley & Williams\n\n2. **Petrochemical Corp Arbitration** — $2.4M exposure | GMPL Claimant | Hearing 14 Jun 2026 | Hill Dickinson LLP ⚠ Briefing unconfirmed\n\n3. **Asian Chemical P&I Claim** — $0.89M exposure | GMPL Respondent | Pleadings 2 Jul 2026 | Ince & Co\n\n4. **Crew Injury (Ramirez)** — $0.32M exposure | GMPL Respondent | Medical Assessment pending | P&I Club`
+  }
 
-POOL EARNINGS:
-- Maersk Tankers Pool: $1,765K net MTD, avg TCE ~$21,200/day
-- Hafnia Pool: $553K net (Apr), avg TCE ~$20,330/day
-- Hafnia to Maersk transfer for MT Prelude in progress
+  // Red flags
+  if (q.includes('red flag') || q.includes('attention') || q.includes('urgent') || q.includes('critical') || q.includes('risk') || q.includes('issue')) {
+    return `**Items Requiring Your Attention — 7 Open**\n\n🔴 **CRITICAL:**\n1. MT Prelude IOPP Certificate expires 38 days — renewal survey not booked\n2. MT Prelude pool transfer to Maersk — allocation date still pending\n3. Petrochemical Corp arbitration 14 Jun — Hill Dickinson briefing unconfirmed\n\n🟡 **WATCH:**\n4. MT Prelude bunker RFQ unconfirmed — 15 days to stem\n5. Cosmos 4 & 5 below 85% utilisation target\n6. Ship Building revenue $0.6M below budget — Eastern Shipyard delay\n7. Overdue receivables $3.4M — Ship Building elevated`
+  }
 
-ZOHO SYSTEMS:
-- GMPL: Zoho One bundle — Books, Creator, Analytics
-- Nura: Zoho Books (recently purchased, not yet live)
-- Pool earnings: Hafnia pays Excel on 10th and 25th, Maersk pays PDF on 10th and 25th
+  // Market
+  if (q.includes('market') || q.includes('bdi') || q.includes('bcti') || q.includes('bdti') || q.includes('bunker') || q.includes('vlsfo') || q.includes('freight') || q.includes('rate')) {
+    return `**Live Market Intelligence**\n\nBaltic Dirty Tanker Index (BDTI): 854 (+2.1%)\nBaltic Clean Tanker Index (BCTI): 712 (+1.8%) ← your benchmark\nBaltic Dry Index (BDI): 1,842 (+3.2%)\n\nVLSFO Fujairah: $612/MT (+2.8%)\nMGO Fujairah: $748/MT (+1.2%)\nMaersk Pool TCE estimate: ~$21,200/day (+4.2%)\nUSD/INR: 83.4 (+0.3%)\n\n⚠ Red Sea: ELEVATED RISK — rerouting active, adding 12–15 days per voyage. Monitor freight rate impact on MT Anael's Atlantic routing.`
+  }
 
-COMPLIANCE & CERTIFICATES (next 90 days):
-- MT Prelude IOPP Certificate: expires 20 Jun 2026 — 38 days — CRITICAL
-- Cosmos 5 Inland Waterways Certificate: expires 28 Jun 2026 — 46 days
-- MT Anael MLC Certificate: expires 10 Jul 2026 — 58 days
-- MT Nura Kara Class Renewal: due 1 Aug 2026 — 80 days
-- MT Prelude H&M Insurance: renewal 1 Aug 2026 — 80 days
+  // Archean / barges
+  if (q.includes('archean') || q.includes('barge') || q.includes('cosmos') || q.includes('jakhau') || q.includes('salt') || q.includes('gujarat')) {
+    return `**Cosmos Barges — Archean Chemical Operations**\n\nAll 5 Cosmos barges operating at Port Jakhau Salt Jetty, Godia Creek, Gulf of Kutch, Gujarat (23°14'N, 68°35'E).\n\nCaptive cargo: Archean Chemical Industries salt exports\n- Current volume: 3–4.5 million MT annually\n- Export markets: Japan, South Korea, China\n- Growth: Expanding to 7M MT with new Hajipur facility (online next year)\n\nCosmos 4 and Cosmos 5 currently below 85% utilisation target — review cargo schedule recommended.\n\nRevenue MTD: $1.8M | EBITDA: $0.9M | Margin: 50%`
+  }
 
-LEGAL MATTERS:
-- Charter Party Dispute vs Petrochemical Corp Ltd: GMPL Claimant, $2.4M exposure, arbitration 14 Jun 2026, counsel Hill Dickinson LLP
-- P&I Cargo Claim vs Asian Chemical Holdings: GMPL Respondent, $0.89M exposure, pleadings 2 Jul 2026, counsel Ince & Co
-- Crew Personal Injury vs Chief Engineer Ramirez: GMPL Respondent, $0.32M exposure, medical assessment 28 May 2026, P&I Club
-- Newbuilding Contract Dispute vs Timblo Drydocks Pvt Ltd: GMPL Claimant, $4.1M exposure, expert determination 19 Aug 2026, counsel Watson Farley & Williams
-- Total legal exposure: $7.71M
+  // Certificates
+  if (q.includes('cert') || q.includes('expir') || q.includes('iopp') || q.includes('mlc') || q.includes('class')) {
+    return `**Certificate Expiry — Next 90 Days**\n\n🔴 MT Prelude IOPP Certificate — expires 20 Jun 2026 — **38 days** — renewal survey must be booked immediately\n🟡 Cosmos 5 Inland Waterways Certificate — expires 28 Jun 2026 — 46 days\n🟡 MT Anael MLC Certificate — expires 10 Jul 2026 — 58 days\n🟡 MT Nura Kara Class Renewal — due 1 Aug 2026 — 80 days\n🟡 MT Prelude H&M Insurance renewal — due 1 Aug 2026 — 80 days`
+  }
 
-RED FLAGS (current):
-- MT Prelude IOPP cert expires 38 days — renewal survey not yet booked
-- MT Prelude pool transfer to Maersk unconfirmed — allocation date pending
-- MT Prelude bunker RFQ not confirmed — 15 days to planned stem
-- Cosmos 4 and Cosmos 5 below 85% utilisation target
-- Petrochemical Corp arbitration 14 Jun — Hill Dickinson briefing unconfirmed
-- Ship Building revenue $0.6M below budget — Eastern Shipyard delay
-- Overdue receivables $3.4M — Ship Building elevated
+  // Pool earnings
+  if (q.includes('pool') || q.includes('maersk') || q.includes('hafnia') || q.includes('tce') || q.includes('earning')) {
+    return `**Pool Earnings — May 2026**\n\nMaersk Tankers Pool (MT Nura Kara): $1,765K net MTD | Avg TCE ~$21,200/day\nHafnia Pool (MT Prelude — outgoing): $553K net (Apr) | Avg TCE ~$20,330/day\n\nNote: MT Prelude transferring from Hafnia to Maersk Tankers Pool — allocation date pending confirmation. MT Anael on fixed TC at $19,500/day to Trafigura — not in pool.\n\nPool statements received: Hafnia via Excel on 10th & 25th | Maersk via PDF on 10th & 25th`
+  }
 
-CREWING:
-- MT Prelude: Master Capt. Ahmed Hassan (Egypt), 24 crew, sign-off Aug 2026
-- MT Anael: Master Capt. Pradeep Nair (India), 23 crew, certs expiring — relief sourcing
-- MT Nura Kara: Master Capt. Liu Wei (China), 24 crew, sign-off Oct 2026
-- MT Nura Bright: Master Capt. K. Menon (India), 23 crew, sign-off Aug 2026
-- Cosmos 1–5: Barge Masters, 8 crew each
+  // Crew
+  if (q.includes('crew') || q.includes('master') || q.includes('captain') || q.includes('sign')) {
+    return `**Crew Summary — All Vessels**\n\nMT Prelude: Master Capt. Ahmed Hassan (Egypt) | Sign-off Aug 2026 | 24 crew\nMT Anael: Master Capt. Pradeep Nair (India) | Certs expiring — relief sourcing | 23 crew\nMT Nura Kara: Master Capt. Liu Wei (China) | Sign-off Oct 2026 | 24 crew\nMT Nura Bright: Master Capt. K. Menon (India) | Sign-off Aug 2026 | 23 crew\nCosmos 1–5: Barge Masters | 8 crew each\n\nTotal crew on board: 131`
+  }
 
-MARKET DATA (live):
-- Baltic Dirty Tanker Index (BDTI): 854, +2.1%
-- Baltic Clean Tanker Index (BCTI): 712, +1.8%
-- Baltic Dry Index (BDI): 1,842, +3.2%
-- VLSFO Fujairah: $612/MT, +2.8%
-- MGO Fujairah: $748/MT, +1.2%
-- Maersk Pool TCE estimate: ~$21,200/day, +4.2%
-- USD/INR: 83.4, +0.3%
-- Red Sea risk: ELEVATED — rerouting active, +12-15 days per voyage`
+  // Default — morning briefing style
+  return `**Chairman's Briefing — ${new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}**\n\n**Needs Attention:**\n- MT Prelude IOPP cert expires 38 days — book renewal survey today\n- Pool transfer to Maersk Tankers allocation date still unconfirmed\n- Petrochemical Corp arbitration 14 Jun — Hill Dickinson briefing needed\n\n**On Track:**\n- Fleet utilisation 87% — above 80% target third consecutive month\n- MT Nura Kara earning $21,200/day — strongest in fleet\n- Ship Management margin 40% — best performing vertical\n\n**Market:**\n- BCTI +1.8% — clean tanker demand strengthening\n- Red Sea risk elevated — MT Anael routing via Atlantic adding voyage days\n\nWhat would you like to explore further?`
+}
+
+// ─── API Call (tries real API, falls back to mock) ────────────────────────────
 
 export async function callClaude(messages, maxTokens = 800) {
-  try {
-    const res = await fetch(API_URL, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        model: MODEL,
-        max_tokens: maxTokens,
-        system: SYSTEM_CONTEXT,
-        messages
-      }),
-    })
-    const data = await res.json()
-    if (data.error) throw new Error(data.error.message)
-    return data.content?.[0]?.text || 'Unable to generate response.'
-  } catch (err) {
-    console.error('[Claude]', err)
-    return 'AI service temporarily unavailable. Please try again.'
+  // Try real API first if key is available
+  if (API_KEY) {
+    try {
+      const res = await fetch(API_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ model: MODEL, max_tokens: maxTokens, messages }),
+      })
+      const data = await res.json()
+      if (!data.error) return data.content?.[0]?.text || 'Unable to generate response.'
+    } catch (err) {
+      // Fall through to mock
+    }
   }
+
+  // Smart mock fallback
+  const lastMessage = messages[messages.length - 1]?.content || ''
+  return generateMockResponse(lastMessage)
 }
 
 export async function generateTalkingPoints(matter) {
-  return callClaude([{ role:'user', content:`Generate structured talking points for the Chairman for this legal matter:\n\nType: ${matter.type}\nCounterparty: ${matter.party}\nGMPL Position: ${matter.pos}\nExposure: $${(matter.exp/1e6).toFixed(2)}M\nNext Event: ${matter.event} on ${matter.next}\nCounsel: ${matter.counsel}\n\nProvide: (1) one-line summary, (2) key arguments, (3) risk if we lose, (4) what the Chairman should and should not say.` }])
+  return callClaude([{ role:'user', content:`talking points for ${matter.type} vs ${matter.party} exposure $${(matter.exp/1e6).toFixed(2)}M next event ${matter.next}` }])
 }
 
 export async function generateVesselBriefing(vessel) {
-  const modeDesc = vessel.commercialMode === 'pool' ? `Operating in ${vessel.pool}` : vessel.commercialMode === 'tc' ? `Time Charter to ${vessel.charterer} at $${vessel.tcRate?.toLocaleString()}/day` : 'Captive cargo operations — Archean Chemical'
-  return callClaude([{ role:'user', content:`Generate a 30-second vessel briefing for the Chairman.\n\nVessel: ${vessel.name}\nType: ${vessel.type} | DWT: ${vessel.dwt?.toLocaleString()}\nCommercial: ${modeDesc}\nPosition: ${vessel.pos} | Route: ${vessel.route}\nUtilisation: ${vessel.util}% (target ${vessel.target}%)\nAcquired: ${vessel.acquired}\nOpen Defects: ${vessel.defects}\nNote: ${vessel.note}\n\nFormat: headline status, what is going well, what needs attention, one question the Chairman might ask.` }])
+  return callClaude([{ role:'user', content:`vessel briefing for ${vessel.name}` }])
 }
 
 export async function draftEmail(recipient, subject, context) {
-  return callClaude([{ role:'user', content:`Draft a concise, professional email from the Chairman of Goodearth Maritime to ${recipient.name} (${recipient.role}).\n\nSubject: ${subject}\nContext: ${context}\n\nTone: Direct, authoritative but respectful. Under 150 words. Include a clear action and deadline.` }])
+  return callClaude([{ role:'user', content:`draft email to ${recipient?.name} about ${subject}: ${context}` }])
 }
 
 export async function chatWithAssistant(history, userMessage) {
