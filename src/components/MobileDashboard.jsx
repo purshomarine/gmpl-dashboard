@@ -145,6 +145,28 @@ function SituationRoom({ onNavigate, now }) {
 
   const hour = now.getHours()
   const greeting = hour < 12 ? 'Good Morning' : hour < 17 ? 'Good Afternoon' : 'Good Evening'
+  const briefMode = hour >= 5 && hour < 12 ? 'morning' : hour < 18 ? 'afternoon' : 'review'
+  const briefConfig = briefMode === 'morning'
+    ? { icon: '✦', label: 'Morning Brief',                       col: M.gold  }
+    : briefMode === 'afternoon'
+    ? { icon: '◎', label: 'Afternoon Pulse — 3 updates',         col: M.blue  }
+    : { icon: '◑', label: 'Day in Review',                       col: M.amber }
+  const briefItems = briefMode === 'morning' ? [
+    { c: M.red,   icon: '⚠', txt: 'MT Prelude IOPP certificate expires in 38 days — renewal survey required immediately' },
+    { c: M.amber, icon: '⚠', txt: 'Petrochemical Corp arbitration 14 Jun — Hill Dickinson briefing unconfirmed' },
+    { c: M.green, icon: '✓', txt: 'Fleet utilisation 87% — above 80% target for third consecutive month' },
+    { c: M.blue,  icon: '↗', txt: 'Baltic Clean Tanker Index +1.8% — product tanker demand strengthening' },
+  ] : briefMode === 'afternoon' ? [
+    { c: M.green, icon: '✓', txt: 'Hill Dickinson confirmed for 14 Jun — 10:42 AM' },
+    { c: M.green, icon: '↑', txt: 'Payment received: Nura Ship Mgmt $85K — 11:15 AM' },
+    { c: M.amber, icon: '⚠', txt: 'MT Prelude ETA shifted — now 6 Jun (was 4 Jun)' },
+    { c: M.amber, icon: '○', txt: 'IOPP survey still unbooked — Day 2 unactioned' },
+  ] : [
+    { c: M.green, icon: '✓', txt: 'Hill Dickinson briefing confirmed for 14 Jun' },
+    { c: M.green, icon: '✓', txt: '$85K payment received from Nura Ship Mgmt' },
+    { c: M.amber, icon: '○', txt: 'IOPP survey booking — Day 2 unactioned' },
+    { c: M.amber, icon: '○', txt: 'Maersk pool alloc. — 3 days no response' },
+  ]
   const dateStr = now.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })
   const timeStr = now.toLocaleTimeString('en-GB', { hour: '2-digit', minute: '2-digit' })
   const tzStr   = now.toLocaleTimeString('en-GB', { timeZoneName: 'short' }).split(' ').pop()
@@ -219,17 +241,12 @@ function SituationRoom({ onNavigate, now }) {
       </div>
 
       <div style={{ margin: '0 16px 16px' }}>
-        <MCard accent={M.gold}>
+        <MCard accent={briefConfig.col}>
           <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginBottom: 12 }}>
-            <div style={{ width: 28, height: 28, background: `linear-gradient(135deg,${M.gold},#E8C97A)`, borderRadius: 8, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 13, color: '#071120', fontWeight: 800 }}>✦</div>
-            <div style={{ fontSize: 12, fontWeight: 700, color: M.gold }}>AI Briefing — {greeting.split(' ')[1]}</div>
+            <div style={{ width: 28, height: 28, background: `linear-gradient(135deg,${briefConfig.col},${briefConfig.col}88)`, borderRadius: 8, display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 13, color: '#071120', fontWeight: 800 }}>{briefConfig.icon}</div>
+            <div style={{ fontSize: 12, fontWeight: 700, color: briefConfig.col }}>{briefConfig.label}</div>
           </div>
-          {[
-            { c: M.red,   icon: '⚠', txt: 'MT Prelude IOPP certificate expires in 38 days — renewal survey required immediately' },
-            { c: M.amber, icon: '◎', txt: 'Petrochemical Corp arbitration 14 Jun — Hill Dickinson briefing still unconfirmed' },
-            { c: M.green, icon: '✓', txt: 'Fleet utilisation 87% — above 80% target for third consecutive month' },
-            { c: M.blue,  icon: '↗', txt: 'Baltic Clean Tanker Index +1.8% — product tanker demand strengthening in Arabian Gulf' },
-          ].map((b, i) => (
+          {briefItems.map((b, i) => (
             <div key={i} style={{ display: 'flex', gap: 10, marginBottom: 10, alignItems: 'flex-start' }}>
               <span style={{ color: b.c, fontSize: 14, marginTop: 1, flexShrink: 0 }}>{b.icon}</span>
               <span style={{ fontSize: 13, color: M.sub, lineHeight: 1.5 }}>{b.txt}</span>

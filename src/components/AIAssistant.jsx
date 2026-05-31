@@ -49,7 +49,7 @@ export default function AIAssistant({ onClose }) {
 
   return (
     <div style={{
-      position:'fixed', top:0, right:0, width:400, height:'100vh',
+      position:'fixed', top:0, right:0, width:400, height:'100dvh',
       background:C.surface, borderLeft:`1px solid ${C.border}`,
       display:'flex', flexDirection:'column', zIndex:1000,
       boxShadow:'-8px 0 40px rgba(0,0,0,0.6)',

@@ -1,6 +1,7 @@
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, ReferenceLine } from 'recharts'
 import { VERTICALS, REVENUE_TREND, MARKET_DATA, CRITICAL_ITEMS, ALERTS } from '../data/seed.js'
 import { C, StatusDot, Card, HeroCard, KpiCard, SectionLabel, GoldButton, tooltipStyle } from './ui.jsx'
+import ExecutiveBriefing, { getBriefingTitle } from './ExecutiveBriefing.jsx'
 
 export default function Overview() {
   const totalRev   = VERTICALS.reduce((s,v) => s + v.rev, 0).toFixed(1)
@@ -16,7 +17,7 @@ export default function Overview() {
         <div style={{ display:'flex', justifyContent:'space-between', alignItems:'flex-start', flexWrap:'wrap', gap:16, marginBottom:20 }}>
           <div>
             <div style={{ fontSize:10, fontWeight:600, color:C.gold, letterSpacing:'0.12em', marginBottom:4 }}>GOOD EARTH MARITIME — GROUP PERFORMANCE · MAY 2026</div>
-            <div style={{ fontFamily:"'Playfair Display', serif", fontSize:13, color:C.textSub }}>{'Chairman\'s Morning Briefing · ' + new Date().toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'})}</div>
+            <div style={{ fontFamily:"'Playfair Display', serif", fontSize:13, color:C.textSub }}>{getBriefingTitle() + ' · ' + new Date().toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'})}</div>
           </div>
           <div style={{ display:'flex', alignItems:'center', gap:8, background:C.greenDim, border:`1px solid ${C.green}44`, borderRadius:20, padding:'5px 14px' }}>
             <StatusDot s="green" animate size={7}/>
@@ -39,32 +40,7 @@ export default function Overview() {
         </div>
       </HeroCard>
 
-      {/* AI Briefing */}
-      <Card accent={C.gold} glow>
-        <div style={{ display:'flex', alignItems:'center', gap:10, marginBottom:16 }}>
-          <div style={{ width:28, height:28, borderRadius:6, background:`linear-gradient(135deg, ${C.gold}, ${C.goldLight})`, display:'flex', alignItems:'center', justifyContent:'center', fontSize:14, color:C.bg }}>✦</div>
-          <div>
-            <div style={{ fontSize:12, fontWeight:700, color:C.gold }}>AI Chairman Briefing</div>
-            <div style={{ fontSize:10, color:C.textMuted }}>Generated 06:00 {new Date().toLocaleTimeString('en-GB',{timeZoneName:'short'}).split(' ').pop()} · Auto-refreshes daily</div>
-          </div>
-        </div>
-        <div style={{ display:'grid', gridTemplateColumns:'repeat(auto-fit, minmax(220px,1fr))', gap:16 }}>
-          <BriefCol color={C.red}   icon="⚠" label="Needs Attention" items={[
-            'MT Prelude IOPP Certificate expires in 38 days — renewal survey must be booked immediately',
-            'Petrochemical Corp arbitration 14 Jun — Hill Dickinson briefing still unconfirmed',
-            'MT Prelude pool transfer to Maersk Tankers — allocation date still unconfirmed',
-          ]}/>
-          <BriefCol color={C.green} icon="✓" label="On Track" items={[
-            'Fleet utilisation at 87% — above 80% target for third consecutive month',
-            'Ship Management margin 40% — strongest performing vertical this quarter',
-            'MT Nura Kara and MT Anael both above 91% utilised this month',
-          ]}/>
-          <BriefCol color={C.blue}  icon="◎" label="Market Intelligence" items={[
-            'VLSFO $612/MT Fujairah — Red Sea rerouting adding 12–15 days per voyage; monitor freight rate impact',
-            'Baltic Clean Tanker Index +1.8% — product tanker spot demand strengthening in Arabian Gulf',
-          ]}/>
-        </div>
-      </Card>
+      <ExecutiveBriefing />
 
       {/* Vertical tiles */}
       <div>
@@ -180,16 +156,3 @@ export default function Overview() {
   )
 }
 
-function BriefCol({ color, icon, label, items }) {
-  return (
-    <div style={{ background:'rgba(6,12,24,0.5)', borderRadius:8, padding:'14px', border:`1px solid ${color}22` }}>
-      <div style={{ display:'flex', alignItems:'center', gap:6, marginBottom:10 }}>
-        <span style={{ fontSize:13, color }}>{icon}</span>
-        <span style={{ fontSize:11, fontWeight:700, color, letterSpacing:'0.06em', textTransform:'uppercase' }}>{label}</span>
-      </div>
-      <ul style={{ margin:0, paddingLeft:14, listStyle:'disc' }}>
-        {items.map((t,i) => <li key={i} style={{ fontSize:12, color:'#C8D8EC', lineHeight:1.8, marginBottom:2 }}>{t}</li>)}
-      </ul>
-    </div>
-  )
-}
