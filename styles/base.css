@@ -127,18 +127,21 @@ body {
   min-height: 100vh;
 }
  
+/* Show sidebar on iPad and above — overlays content (position:fixed) */
+@media (min-width: 768px) {
+  .sidebar { display: flex; flex-direction: column; }
+}
+
 /* Laptop breakpoint */
 @media (min-width: 1025px) {
- 
+
   :root {
     --sidebar-width: 220px;
     --sidebar-collapsed-width: 64px;
   }
- 
+
   /* Sidebar visible and styled */
   .sidebar {
-    display: flex;
-    flex-direction: column;
     width: var(--sidebar-width);
     border-right: 1px solid var(--bg-border);
     transition: width 250ms ease-in-out;

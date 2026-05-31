@@ -749,11 +749,66 @@ const TABS = [
   { k: 'fleet',   icon: '⚓', label: 'Fleet'   },
   { k: 'finance', icon: '⊞', label: 'Finance' },
   { k: 'risk',    icon: '⚑', label: 'Risk'    },
-  { k: 'deals',   icon: '◈', label: 'Deals'   },
+  { k: 'more',    icon: '⋯', label: 'More'    },
 ]
+
+function MoreTab({ onNavigate }) {
+  const items = [
+    { k:'deals',       icon:'◈', label:'Active Deals',    sub:'M&A · Newbuilding · Finance' },
+    { k:'group',       icon:'◎', label:'Group Structure', sub:'Corporate org chart' },
+    { k:'crewing',     icon:'◷', label:'Crewing',         sub:'Masters · Crew · Sign-offs' },
+    { k:'inspections', icon:'✦', label:'Inspections',     sub:'PSC · SIRE · Oil Major' },
+    { k:'hse',         icon:'⊕', label:'HSE',             sub:'Safety · LTIF · Actions' },
+    { k:'pool',        icon:'⊞', label:'Pool Earnings',   sub:'Maersk · Hafnia · TCE' },
+    { k:'bunker',      icon:'⛽', label:'Bunkering',       sub:'ROB · Stems · Log' },
+    { k:'awards',      icon:'🏆', label:'Awards',          sub:'Master of the Year' },
+    { k:'zoho',        icon:'⊟', label:'Zoho ERP',        sub:'Books · Creator · Analytics' },
+    { k:'assumptions', icon:'⊠', label:'Scenario Mapper', sub:'P&L modelling · Sliders' },
+    { k:'market',      icon:'◈', label:'Market Intel',    sub:'BDTI · BCTI · FX rates' },
+    { k:'legal',       icon:'⚖', label:'Legal & Risk',    sub:'Matters · Exposure · Spend' },
+    { k:'redflags',    icon:'⚑', label:'Red Flags',       sub:'Critical · Amber · Alerts' },
+  ]
+  return (
+    <div style={{ paddingBottom: 8 }}>
+      <div style={{ padding: '20px 20px 16px' }}>
+        <div style={{ fontSize: 11, fontWeight: 700, color: M.muted,
+          letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 4 }}>
+          All Screens
+        </div>
+        <div style={{ fontFamily: "'Playfair Display',serif", fontSize: 22,
+          fontWeight: 600, color: M.text }}>More
+        </div>
+      </div>
+      <div style={{ padding: '0 16px', display: 'flex', flexDirection: 'column', gap: 8 }}>
+        {items.map(item => (
+          <div key={item.k} onClick={() => onNavigate(item.k)}
+            style={{ background: M.card, borderRadius: 12, padding: '14px 16px',
+              display: 'flex', alignItems: 'center', gap: 14, cursor: 'pointer',
+              border: `1px solid ${M.border}` }}>
+            <div style={{ width: 40, height: 40, borderRadius: 10,
+              background: M.cardAlt, display: 'flex', alignItems: 'center',
+              justifyContent: 'center', fontSize: 18, flexShrink: 0 }}>
+              {item.icon}
+            </div>
+            <div style={{ flex: 1 }}>
+              <div style={{ fontSize: 14, fontWeight: 600, color: M.text }}>
+                {item.label}
+              </div>
+              <div style={{ fontSize: 11, color: M.muted, marginTop: 2 }}>
+                {item.sub}
+              </div>
+            </div>
+            <div style={{ fontSize: 18, color: M.muted }}>›</div>
+          </div>
+        ))}
+      </div>
+    </div>
+  )
+}
 
 export default function MobileDashboard() {
   const [tab,       setTab]       = useState('home')
+  const [showMore,  setShowMore]  = useState(false)
   const [assistant, setAssistant] = useState(false)
   const [alert,     setAlert]     = useState(true)
   const [now,       setNow]       = useState(new Date())
@@ -771,6 +826,7 @@ export default function MobileDashboard() {
     finance: <FinanceTab/>,
     risk:    <RiskTab/>,
     deals:   <DealsTab/>,
+    more:    <MoreTab onNavigate={(k) => { setTab(k); setShowMore(false); }}/>,
   }
 
   return (
