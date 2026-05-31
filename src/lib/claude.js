@@ -66,8 +66,8 @@ function generateMockResponse(userMessage) {
   }
 
   // Legal
-  if (q.includes('legal') || q.includes('exposure') || q.includes('arbitration') || q.includes('dispute') || q.includes('timblo') || q.includes('petrochemical')) {
-    return `**Legal Matters — Total Exposure $7.71M**\n\n1. **Timblo Drydocks Dispute** — $4.1M exposure | GMPL Claimant | Expert Determination 19 Aug 2026 | Watson Farley & Williams\n\n2. **Petrochemical Corp Arbitration** — $2.4M exposure | GMPL Claimant | Hearing 14 Jun 2026 | Hill Dickinson LLP ⚠ Briefing unconfirmed\n\n3. **Asian Chemical P&I Claim** — $0.89M exposure | GMPL Respondent | Pleadings 2 Jul 2026 | Ince & Co\n\n4. **Crew Injury (Ramirez)** — $0.32M exposure | GMPL Respondent | Medical Assessment pending | P&I Club`
+  if (q.includes('legal') || q.includes('exposure') || q.includes('arbitration') || q.includes('dispute') || q.includes('timblo') || q.includes('petrochemical') || q.includes('gulf petrochemical') || q.includes('trafigura') || q.includes('santos')) {
+    return `**Legal Matters — Total Exposure $7.71M**\n\n1. **Gulf Petrochemicals FZE — Charter Party Dispute** — $2.4M exposure | GMPL Claimant | Arbitration Hearing 14 Jun 2026 | Hill Dickinson LLP ⚠ Counsel briefing unconfirmed\n\n2. **Timblo Drydocks — Newbuilding Dispute** — $4.1M exposure | GMPL Claimant | Expert Determination 19 Aug 2026 | Watson Farley & Williams\n\n3. **Trafigura Pte Ltd — P&I Cargo Claim** — $0.89M exposure | GMPL Respondent | Pleadings 2 Jul 2026 | Ince & Co (MT Anael)\n\n4. **Chief Engineer R. Santos — Crew Injury** — $0.32M exposure | GMPL Respondent | Medical Assessment 15 Jun 2026 | UK P&I Club (MT Nura Kara)`
   }
 
   // Red flags

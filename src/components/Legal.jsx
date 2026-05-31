@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { LEGAL_MATTERS, HEARING_EVENTS, CERTIFICATES } from '../data/seed.js'
+import { LEGAL_MATTERS, LEGAL_CALENDAR, CERTIFICATES } from '../data/seed.js'
 import { C, Card, KpiCard, SectionLabel, GoldButton, StatusDot, Badge } from './ui.jsx'
 import { generateTalkingPoints } from '../lib/claude.js'
 
@@ -8,7 +8,7 @@ const SC = { green:C.green, amber:C.amber, red:C.red }
 const MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']
 
 function HearingCalendar({ events }) {
-  const now = new Date('2026-05-13')
+  const now = new Date()
   const months = [
     { year:2026, month:4 }, // May
     { year:2026, month:5 }, // Jun
@@ -50,8 +50,16 @@ export default function Legal() {
   const [talkPoints, setTalkPoints] = useState({})
   const [loading, setLoading] = useState({})
 
-  const totalExp   = LEGAL_MATTERS.reduce((s,m) => s+m.exp, 0)
-  const totalSpend = LEGAL_MATTERS.reduce((s,m) => s+m.spend, 0)
+  const totalExp      = LEGAL_MATTERS.reduce((s,m) => s+m.exp, 0)
+  const totalSpendUSD = LEGAL_MATTERS.reduce((s,m) => s + (m.currency === 'INR' ? (m.spendUSD || 0) : (m.spend || 0)), 0)
+
+  const today = new Date()
+  const nextEvent = LEGAL_CALENDAR
+    .filter(e => new Date(e.date) > today)
+    .sort((a,b) => new Date(a.date) - new Date(b.date))[0]
+  const nextEventLabel = nextEvent
+    ? new Date(nextEvent.date).toLocaleDateString('en-GB', { day:'numeric', month:'short' })
+    : '—'
 
   async function handleTalkPoints(m) {
     setLoading(p => ({...p, [m.id]:true}))
@@ -67,8 +75,8 @@ export default function Legal() {
         {[
           {label:'Active Matters',  value:String(LEGAL_MATTERS.length),          color:C.gold },
           {label:'Total Exposure',  value:`$${(totalExp/1e6).toFixed(1)}M`,       color:C.red  },
-          {label:'Legal Spend YTD', value:`$${(totalSpend/1000).toFixed(0)}K`,    color:C.amber},
-          {label:'Next Event',      value:'28 May',                               color:C.text },
+          {label:'Legal Spend YTD', value:`$${(totalSpendUSD/1000).toFixed(0)}K`,  color:C.amber},
+          {label:'Next Event',      value:nextEventLabel,                          color:C.text },
         ].map(k=>(
           <div key={k.label} style={{ background:C.card, border:`1px solid ${C.border}`, borderRadius:10, padding:'14px 16px', boxShadow:'0 2px 12px rgba(0,0,0,0.3)' }}>
             <div style={{ fontSize:10, fontWeight:600, color:C.textMuted, letterSpacing:'0.08em', textTransform:'uppercase', marginBottom:6 }}>{k.label}</div>
@@ -89,8 +97,9 @@ export default function Legal() {
                   <div style={{ fontSize:12, color:C.textSub }}>vs {m.party} · GMPL as {m.pos} · {m.counsel}</div>
                 </div>
                 <div style={{ textAlign:'right', flexShrink:0 }}>
-                  <div style={{ fontFamily:"'Playfair Display',serif", fontSize:18, fontWeight:600, color:C.red }}>${(m.exp/1e6).toFixed(2)}M</div>
-                  <div style={{ fontSize:11, color:C.textMuted }}>Exposure · Spent ${(m.spend/1000).toFixed(0)}K</div>
+                  <div style={{ fontSize:10, fontWeight:600, color:C.textMuted, letterSpacing:'0.06em', textTransform:'uppercase', marginBottom:2 }}>Exposure</div>
+                  <div style={{ fontFamily:"'Playfair Display',serif", fontSize:18, fontWeight:600, color:C.red, marginBottom:4 }}>${(m.exp/1e6).toFixed(2)}M</div>
+                  <div style={{ fontSize:11, color:C.textMuted }}>Legal Spend: {m.currency==='INR' ? `₹${(m.spend/1e6).toFixed(1)}M (~$${(m.spendUSD/1000).toFixed(0)}K USD)` : `$${(m.spend/1000).toFixed(0)}K`}</div>
                 </div>
               </div>
               <div style={{ display:'flex', justifyContent:'space-between', alignItems:'flex-start', gap:10, flexWrap:'wrap' }}>
@@ -117,7 +126,7 @@ export default function Legal() {
       {/* Hearing Calendar */}
       <Card>
         <SectionLabel accent>Hearing &amp; Events Calendar — Next 90 Days</SectionLabel>
-        <HearingCalendar events={HEARING_EVENTS}/>
+        <HearingCalendar events={LEGAL_CALENDAR}/>
       </Card>
 
       {/* Certificate expiry */}

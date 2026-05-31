@@ -9,7 +9,7 @@ const SLIDERS = [
   {k:'util',   l:'Fleet Utilisation',   min:40, max:100,  step:1,   unit:'%'},
   {k:'poolRate',   l:'Pool Rate (USD/day)',       min:8000,max:35000,step:500, unit:''},
   {k:'bunker', l:'VLSFO Bunker ($/MT)', min:400,max:1200, step:10,  unit:''},
-  {k:'inr',    l:'USD / INR',           min:78, max:92,   step:0.1, unit:''},
+  {k:'inr',    l:'USD / INR Exchange Rate', min:70, max:120,  step:0.5, unit:''},
   {k:'extra',  l:'Additional Vessels',  min:0,  max:6,    step:1,   unit:''},
   {k:'opex',   l:'OPEX / Day (USD)',    min:6000,max:14000,step:100, unit:''},
 ]
