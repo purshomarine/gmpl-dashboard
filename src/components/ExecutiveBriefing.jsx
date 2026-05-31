@@ -240,15 +240,15 @@ function DayInReview() {
   )
 }
 
-export function getBriefingTitle() {
-  const mode = getBriefingMode()
+export function getBriefingTitle(modeOverride) {
+  const mode = modeOverride || getBriefingMode()
   return mode === 'morning' ? "Chairman's Morning Brief"
     : mode === 'afternoon' ? 'Afternoon Pulse'
     : 'Day in Review'
 }
 
-export default function ExecutiveBriefing() {
-  const mode = getBriefingMode()
+export default function ExecutiveBriefing({ mode: modeOverride }) {
+  const mode = modeOverride || getBriefingMode()
   if (mode === 'morning')   return <MorningBrief />
   if (mode === 'afternoon') return <AfternoonPulse />
   return <DayInReview />

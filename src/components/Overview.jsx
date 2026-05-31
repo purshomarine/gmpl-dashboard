@@ -1,9 +1,17 @@
+import { useState } from 'react'
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, ReferenceLine } from 'recharts'
 import { VERTICALS, REVENUE_TREND, MARKET_DATA, CRITICAL_ITEMS, ALERTS } from '../data/seed.js'
 import { C, StatusDot, Card, HeroCard, KpiCard, SectionLabel, GoldButton, tooltipStyle } from './ui.jsx'
 import ExecutiveBriefing, { getBriefingTitle } from './ExecutiveBriefing.jsx'
 
+const BRIEF_MODES = [
+  { key: 'morning',   label: 'Morning Brief' },
+  { key: 'afternoon', label: 'Afternoon Pulse' },
+  { key: 'review',    label: 'Day in Review' },
+]
+
 export default function Overview() {
+  const [briefMode, setBriefMode] = useState(null)
   const totalRev   = VERTICALS.reduce((s,v) => s + v.rev, 0).toFixed(1)
   const totalEbitda= VERTICALS.reduce((s,v) => s + v.ebitda, 0).toFixed(1)
   const totalCash  = VERTICALS.reduce((s,v) => s + v.cash, 0).toFixed(1)
@@ -17,7 +25,7 @@ export default function Overview() {
         <div style={{ display:'flex', justifyContent:'space-between', alignItems:'flex-start', flexWrap:'wrap', gap:16, marginBottom:20 }}>
           <div>
             <div style={{ fontSize:10, fontWeight:600, color:C.gold, letterSpacing:'0.12em', marginBottom:4 }}>GOOD EARTH MARITIME — GROUP PERFORMANCE · MAY 2026</div>
-            <div style={{ fontFamily:"'Playfair Display', serif", fontSize:13, color:C.textSub }}>{getBriefingTitle() + ' · ' + new Date().toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'})}</div>
+            <div style={{ fontFamily:"'Playfair Display', serif", fontSize:13, color:C.textSub }}>{getBriefingTitle(briefMode) + ' · ' + new Date().toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'})}</div>
           </div>
           <div style={{ display:'flex', alignItems:'center', gap:8, background:C.greenDim, border:`1px solid ${C.green}44`, borderRadius:20, padding:'5px 14px' }}>
             <StatusDot s="green" animate size={7}/>
@@ -40,7 +48,28 @@ export default function Overview() {
         </div>
       </HeroCard>
 
-      <ExecutiveBriefing />
+      <div style={{ display:'flex', gap:6, justifyContent:'flex-end' }}>
+        {BRIEF_MODES.map(m => {
+          const active = (briefMode || null) === m.key
+          return (
+            <button
+              key={m.key}
+              onClick={() => setBriefMode(briefMode === m.key ? null : m.key)}
+              style={{
+                fontSize:10, fontWeight:600, letterSpacing:'0.08em',
+                padding:'5px 12px', borderRadius:20, cursor:'pointer',
+                border:`1px solid ${active ? C.gold : C.border}`,
+                background: active ? `${C.gold}18` : 'transparent',
+                color: active ? C.gold : C.textMuted,
+                transition:'all 0.15s',
+              }}
+            >
+              {m.label}
+            </button>
+          )
+        })}
+      </div>
+      <ExecutiveBriefing mode={briefMode} />
 
       {/* Vertical tiles */}
       <div>
