@@ -115,6 +115,7 @@ body {
   top: 0;
   left: 0;
   height: 100vh;
+  height: 100dvh;
   width: 220px;
   z-index: 100;
   background: var(--bg-elevated);
