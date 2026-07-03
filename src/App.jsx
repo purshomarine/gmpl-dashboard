@@ -78,7 +78,7 @@ export default function App() {
             <div style={{ display:'flex', alignItems:'center', gap:10 }}>
               <span className="pulse-red" style={{ width:8,height:8,borderRadius:'50%',background:C.red,display:'inline-block',flexShrink:0 }}/>
               <span style={{ fontWeight:700,color:C.red,fontSize:12,letterSpacing:'0.04em',flexShrink:0 }}>CRITICAL</span>
-              <span style={{ fontSize:13,color:'#FCA5A5' }}>MT Prelude — IOPP Certificate expires in 38 days. Renewal survey must be booked immediately.</span>
+              <span style={{ fontSize:13,color:'#FCA5A5' }}>MT Prelude — IOPP Certificate expires 10 Aug (38 days). Renewal survey must be booked immediately.</span>
             </div>
             <button onClick={()=>setAlert(false)} style={{ background:'none',border:'none',color:'#FCA5A5',fontSize:22,lineHeight:1,flexShrink:0 }}>×</button>
           </div>

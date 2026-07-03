@@ -47,15 +47,15 @@ export const GROUP_ENTITIES = [
 ]
 
 export const NURA_CHARTERS = [
-  { id:'CP-001', vessel:'MT Anael',      charterer:'Trafigura Pte Ltd',                  type:'Time Charter',  rate:19500, currency:'USD/day', start:'2026-01-15', end:'2027-01-14', status:'active', paymentStatus:'Current',  netTCE:18200, nextHire:'1 Jun 2026', notes:'Fixed rate TC — redelivery at expiry.' },
-  { id:'CP-002', vessel:'MT Prelude',    charterer:'Hafnia Pool → Maersk Tankers Pool',  type:'Pool Agreement',rate:20400, currency:'USD/day (est.)', start:'2025-09-01', end:'Ongoing', status:'active', paymentStatus:'Current',  netTCE:18900, nextHire:'Monthly distribution', notes:'Pool transfer in progress.' },
+  { id:'CP-001', vessel:'MT Anael',      charterer:'Trafigura Pte Ltd',                  type:'Time Charter',  rate:19500, currency:'USD/day', start:'2026-01-15', end:'2027-01-14', status:'active', paymentStatus:'Current',  netTCE:18200, nextHire:'1 Aug 2026', notes:'Fixed rate TC — redelivery at expiry.' },
+  { id:'CP-002', vessel:'MT Prelude',    charterer:'Maersk Tankers Pool',                type:'Pool Agreement',rate:20400, currency:'USD/day (est.)', start:'2025-09-01', end:'Ongoing', status:'active', paymentStatus:'Current',  netTCE:18900, nextHire:'Monthly distribution', notes:'Pool transfer completed — now in Maersk Tankers Pool.' },
   { id:'CP-003', vessel:'MT Nura Kara',  charterer:'Maersk Tankers Pool',                type:'Pool Agreement',rate:21200, currency:'USD/day (est.)', start:'2026-03-20', end:'Ongoing', status:'active', paymentStatus:'Current',  netTCE:19600, nextHire:'Monthly distribution', notes:'Pool points allocation confirmed.' },
   { id:'CP-004', vessel:'MT Nura Bright',charterer:'Goodearth Internal Cargo Programme', type:'Captive Cargo', rate:0,     currency:'Internal',       start:'2026-04-20', end:'Ongoing', status:'active', paymentStatus:'Current',  netTCE:14000, nextHire:'N/A — Internal', notes:'Dedicated captive cargo vessel.' },
 ]
 
 // ─── SHIPPING PARTNERS ────────────────────────────────────────────────────────
 export const SHIPPING_PARTNERS = [
-  { name:'Maersk Tankers', role:'Pool Operator', vessels:['MT Prelude (transfer)','MT Nura Kara'], color:'#00243D', website:'https://www.maersktankers.com' },
+  { name:'Maersk Tankers', role:'Pool Operator', vessels:['MT Prelude','MT Nura Kara'], color:'#00243D', website:'https://www.maersktankers.com' },
   { name:'Hafnia',         role:'Pool Operator (outgoing)', vessels:['MT Prelude'], color:'#004B87', website:'https://www.hafnia.com' },
   { name:'Trafigura',      role:'TC Charterer',  vessels:['MT Anael'], color:'#E30613', website:'https://www.trafigura.com' },
   { name:'UK P&I Club',    role:'P&I Insurer',   vessels:['All tankers'], color:'#003366', website:'https://www.ukpandi.com' },
@@ -66,10 +66,10 @@ export const SHIPPING_PARTNERS = [
 
 // ─── VESSELS ─────────────────────────────────────────────────────────────────
 export const VESSELS = [
-  { id:'V001', name:'MT Prelude',     type:'MR Product Tanker', flag:'Marshall Islands', util:88, target:85, status:'amber', pos:'East Mediterranean',route:'Mediterranean → Dortyol, Turkey',crew:24, defects:1, certs:'ok',      dwt:47200, built:2018, class:'DNV', imo:'9823041', mgr:'Capt. Ahmed Hassan',        dayRate:20400, voyageDays:12, pl:214000, commercialMode:'pool',    pool:'Hafnia Pool → Maersk Tankers',   charterer:null,              acquired:'Aug 2025', entity:'nsm',            lat:36.8, lng:36.1, note:'Transferring from Hafnia to Maersk Tankers Pool', rob_vlsfo:420, rob_mdo:38, eta:'02 Jun 2026', nextPort:'Dortyol, Turkey', latDisplay:'36°14\'N', lngDisplay:'036°08\'E', insurer_hm:'Skuld', insurer_pi:'UK P&I Club', loh_covered:true, insured_value:28500000 },
-  { id:'V002', name:'MT Anael',       type:'MR Product Tanker', flag:'Marshall Islands', util:95, target:88, status:'green', pos:'Conakry, Guinea', route:'Atlantic → Conakry',         crew:23, defects:0, certs:'ok',      dwt:46800, built:2019, class:'BV',  imo:'9871234', mgr:'Capt. Pradeep Nair',        dayRate:19500, voyageDays:18, pl:312000, commercialMode:'tc',      pool:null,                             charterer:'Trafigura Pte Ltd', acquired:'Jan 2026', entity:'nsm',            lat:9.5,  lng:-13.7, note:'TC to Trafigura $19,500/day until Jan 2027', rob_vlsfo:180, rob_mdo:22, eta:'04 Jun 2026', nextPort:'Conakry, Guinea — discharging', latDisplay:'09°31\'N', lngDisplay:'013°42\'W', insurer_hm:'Norwegian Hull Club', insurer_pi:'UK P&I Club', loh_covered:true, insured_value:30200000 },
-  { id:'V003', name:'MT Nura Kara',   type:'MR Product Tanker', flag:'Malta',            util:92, target:88, status:'green', pos:'China Coast',     route:'En route → Shanghai',        crew:24, defects:2, certs:'ok',      dwt:47500, built:2017, class:'LR',  imo:'9756123', mgr:'Capt. Liu Wei',             dayRate:21200, voyageDays:8,  pl:298000, commercialMode:'pool',    pool:'Maersk Tankers Pool',            charterer:null,              acquired:'Mar 2026', entity:'nura_kara_spv',  lat:30.7, lng:122.4, note:'Maersk Tankers Pool — pool points confirmed', rob_vlsfo:310, rob_mdo:41, eta:'08 Jun 2026', nextPort:'Shanghai, China', latDisplay:'30°42\'N', lngDisplay:'122°24\'E', insurer_hm:'Gard', insurer_pi:'UK P&I Club', loh_covered:true, insured_value:27800000 },
-  { id:'V004', name:'MT Nura Bright', type:'MR Product Tanker', flag:'Malta',            util:82, target:80, status:'green', pos:'Indian Coast',    route:'Indian Coast — slow speed',  crew:23, defects:1, certs:'ok',      dwt:46500, built:2020, class:'DNV', imo:'9912345', mgr:'Capt. K. Menon',            dayRate:0,     voyageDays:14, pl:178000, commercialMode:'captive', pool:null,                             charterer:'Goodearth Internal', acquired:'Apr 2026', entity:'nura_bright_spv',lat:15.5, lng:73.8, note:'Formerly ELVITA R. Dedicated captive cargo operations — Archean Chemical.', rob_vlsfo:95, rob_mdo:18, eta:'03 Jun 2026', nextPort:'Mumbai, India', latDisplay:'15°30\'N', lngDisplay:'073°48\'E', insurer_hm:'Skuld', insurer_pi:'UK P&I Club', loh_covered:true, insured_value:32100000 },
+  { id:'V001', name:'MT Prelude',     type:'MR Product Tanker', flag:'Marshall Islands', util:88, target:85, status:'amber', pos:'East Mediterranean',route:'Mediterranean → Dortyol, Turkey',crew:24, defects:1, certs:'ok',      dwt:47200, built:2018, class:'DNV', imo:'9823041', mgr:'Capt. Ahmed Hassan',        dayRate:20400, voyageDays:12, pl:214000, commercialMode:'pool',    pool:'Maersk Tankers Pool',            charterer:null,              acquired:'Aug 2025', entity:'nsm',            lat:36.8, lng:36.1, note:'Maersk Tankers Pool — pool transfer completed', rob_vlsfo:420, rob_mdo:38, eta:'14 Jul 2026', nextPort:'Dortyol, Turkey', latDisplay:'36°14\'N', lngDisplay:'036°08\'E', insurer_hm:'Skuld', insurer_pi:'UK P&I Club', loh_covered:true, insured_value:28500000 },
+  { id:'V002', name:'MT Anael',       type:'MR Product Tanker', flag:'Marshall Islands', util:95, target:88, status:'green', pos:'Gulf of Guinea', route:'West Africa → Lomé, Togo',       crew:23, defects:0, certs:'ok',      dwt:46800, built:2019, class:'BV',  imo:'9871234', mgr:'Capt. Pradeep Nair',        dayRate:19500, voyageDays:18, pl:312000, commercialMode:'tc',      pool:null,                             charterer:'Trafigura Pte Ltd', acquired:'Jan 2026', entity:'nsm',            lat:5.5,  lng:1.2,  note:'TC to Trafigura $19,500/day until Jan 2027', rob_vlsfo:180, rob_mdo:22, eta:'11 Jul 2026', nextPort:'Lomé, Togo', latDisplay:'05°31\'N', lngDisplay:'001°12\'E', insurer_hm:'Norwegian Hull Club', insurer_pi:'UK P&I Club', loh_covered:true, insured_value:30200000 },
+  { id:'V003', name:'MT Nura Kara',   type:'MR Product Tanker', flag:'Malta',            util:92, target:88, status:'green', pos:'China Coast',     route:'En route → Shanghai',        crew:24, defects:2, certs:'ok',      dwt:47500, built:2017, class:'LR',  imo:'9756123', mgr:'Capt. Liu Wei',             dayRate:21200, voyageDays:8,  pl:298000, commercialMode:'pool',    pool:'Maersk Tankers Pool',            charterer:null,              acquired:'Mar 2026', entity:'nura_kara_spv',  lat:30.7, lng:122.4, note:'Maersk Tankers Pool — pool points confirmed', rob_vlsfo:310, rob_mdo:41, eta:'18 Jul 2026', nextPort:'Shanghai, China', latDisplay:'30°42\'N', lngDisplay:'122°24\'E', insurer_hm:'Gard', insurer_pi:'UK P&I Club', loh_covered:true, insured_value:27800000 },
+  { id:'V004', name:'MT Nura Bright', type:'MR Product Tanker', flag:'Malta',            util:82, target:80, status:'green', pos:'Indian Coast',    route:'Indian Coast — slow speed',  crew:23, defects:1, certs:'ok',      dwt:46500, built:2020, class:'DNV', imo:'9912345', mgr:'Capt. K. Menon',            dayRate:0,     voyageDays:14, pl:178000, commercialMode:'captive', pool:null,                             charterer:'Goodearth Internal', acquired:'Apr 2026', entity:'nura_bright_spv',lat:15.5, lng:73.8, note:'Formerly ELVITA R. Dedicated captive cargo operations — Archean Chemical.', rob_vlsfo:95, rob_mdo:18, eta:'09 Jul 2026', nextPort:'Mumbai, India', latDisplay:'15°30\'N', lngDisplay:'073°48\'E', insurer_hm:'Skuld', insurer_pi:'UK P&I Club', loh_covered:true, insured_value:32100000 },
   { id:'B001', name:'Cosmos 1',       type:'Inland River Barge',flag:'India',            util:90, target:85, status:'green', pos:'Port Jakhau, Gujarat',route:'Jakhau Salt Jetty → Export Markets', crew:8,  defects:0, certs:'ok',      dwt:2100,  built:2024, class:'IACS',imo:'N/A',    mgr:'Barge Master',              dayRate:0,     voyageDays:0,  pl:42000,  commercialMode:'captive', pool:null, charterer:'Goodearth Internal', acquired:'2024', entity:'gmpl', lat:23.14, lng:68.35, note:'Captive cargo — Archean Chemical salt exports to Japan, South Korea, China' },
   { id:'B002', name:'Cosmos 2',       type:'Inland River Barge',flag:'India',            util:88, target:85, status:'green', pos:'Port Jakhau, Gujarat',route:'Jakhau Salt Jetty → Export Markets', crew:8,  defects:0, certs:'ok',      dwt:2100,  built:2024, class:'IACS',imo:'N/A',    mgr:'Barge Master',              dayRate:0,     voyageDays:0,  pl:40000,  commercialMode:'captive', pool:null, charterer:'Goodearth Internal', acquired:'2024', entity:'gmpl', lat:23.44, lng:68.65, note:'Captive cargo — Archean Chemical salt exports to Japan, South Korea, China' },
   { id:'B003', name:'Cosmos 3',       type:'Inland River Barge',flag:'India',            util:85, target:85, status:'green', pos:'Port Jakhau, Gujarat',route:'Jakhau Salt Jetty → Export Markets', crew:8,  defects:1, certs:'ok',      dwt:2100,  built:2025, class:'IACS',imo:'N/A',    mgr:'Barge Master',              dayRate:0,     voyageDays:0,  pl:38000,  commercialMode:'captive', pool:null, charterer:'Goodearth Internal', acquired:'2025', entity:'gmpl', lat:22.84, lng:68.65, note:'Captive cargo — Archean Chemical salt exports to Japan, South Korea, China' },
@@ -112,28 +112,28 @@ export const FLEET_GROWTH = [
 
 // ─── INSURANCE ───────────────────────────────────────────────────────────────
 export const INSURANCE = [
-  { id:'HM-001', category:'H&M',    vessel:'MT Prelude',     insurer:'Skuld Mutual P&I',           broker:'Inchcape Shipping', policyNo:'SKU-2025-47821', sumInsured:28500000, premium:185000, inception:'2025-08-01', expiry:'2026-08-01', daysToRenewal:80,  status:'amber', coverage:'Hull & Machinery — Total Loss, GA, Salvage' },
-  { id:'HM-002', category:'H&M',    vessel:'MT Anael',       insurer:'Norwegian Hull Club',         broker:'AON Marine',        policyNo:'NHC-2026-00234', sumInsured:30200000, premium:196000, inception:'2026-01-15', expiry:'2027-01-15', daysToRenewal:247, status:'green', coverage:'Hull & Machinery — Total Loss, GA, Salvage' },
-  { id:'HM-003', category:'H&M',    vessel:'MT Nura Kara',   insurer:'Gard P&I (Bermuda) Ltd',     broker:'Marsh Marine',      policyNo:'GAR-2026-58812', sumInsured:27800000, premium:178000, inception:'2026-03-20', expiry:'2027-03-20', daysToRenewal:311, status:'green', coverage:'Hull & Machinery — Total Loss' },
-  { id:'HM-004', category:'H&M',    vessel:'MT Nura Bright', insurer:'Skuld Mutual P&I',           broker:'Inchcape Shipping', policyNo:'SKU-2026-52190', sumInsured:32100000, premium:208000, inception:'2026-04-20', expiry:'2027-04-20', daysToRenewal:342, status:'green', coverage:'Hull & Machinery — Total Loss, GA, Salvage' },
-  { id:'PI-001',  category:'P&I',   vessel:'All Tankers',    insurer:'UK P&I Club',                broker:'Thomas Miller',     policyNo:'UK-2026-GMPL-01',sumInsured:null,     premium:320000, inception:'2026-02-20', expiry:'2027-02-20', daysToRenewal:283, status:'green', coverage:'Third party liability — cargo, crew, pollution, collision' },
-  { id:'WR-001',  category:'War Risk',vessel:'MT Anael',     insurer:'Lloyd\'s of London',         broker:'AON Marine',        policyNo:'LLY-2026-WR-891',sumInsured:30200000, premium:48000,  inception:'2026-01-15', expiry:'2027-01-15', daysToRenewal:247, status:'green', coverage:'War risk including terrorism, piracy — Red Sea routing active' },
+  { id:'HM-001', category:'H&M',    vessel:'MT Prelude',     insurer:'Skuld Mutual P&I',           broker:'Inchcape Shipping', policyNo:'SKU-2025-47821', sumInsured:28500000, premium:185000, inception:'2025-08-01', expiry:'2026-08-01', daysToRenewal:29,  status:'red',   coverage:'Hull & Machinery — Total Loss, GA, Salvage' },
+  { id:'HM-002', category:'H&M',    vessel:'MT Anael',       insurer:'Norwegian Hull Club',         broker:'AON Marine',        policyNo:'NHC-2026-00234', sumInsured:30200000, premium:196000, inception:'2026-01-15', expiry:'2027-01-15', daysToRenewal:196, status:'green', coverage:'Hull & Machinery — Total Loss, GA, Salvage' },
+  { id:'HM-003', category:'H&M',    vessel:'MT Nura Kara',   insurer:'Gard P&I (Bermuda) Ltd',     broker:'Marsh Marine',      policyNo:'GAR-2026-58812', sumInsured:27800000, premium:178000, inception:'2026-03-20', expiry:'2027-03-20', daysToRenewal:260, status:'green', coverage:'Hull & Machinery — Total Loss' },
+  { id:'HM-004', category:'H&M',    vessel:'MT Nura Bright', insurer:'Skuld Mutual P&I',           broker:'Inchcape Shipping', policyNo:'SKU-2026-52190', sumInsured:32100000, premium:208000, inception:'2026-04-20', expiry:'2027-04-20', daysToRenewal:291, status:'green', coverage:'Hull & Machinery — Total Loss, GA, Salvage' },
+  { id:'PI-001',  category:'P&I',   vessel:'All Tankers',    insurer:'UK P&I Club',                broker:'Thomas Miller',     policyNo:'UK-2026-GMPL-01',sumInsured:null,     premium:320000, inception:'2026-02-20', expiry:'2027-02-20', daysToRenewal:232, status:'green', coverage:'Third party liability — cargo, crew, pollution, collision' },
+  { id:'WR-001',  category:'War Risk',vessel:'MT Anael',     insurer:'Lloyd\'s of London',         broker:'AON Marine',        policyNo:'LLY-2026-WR-891',sumInsured:30200000, premium:48000,  inception:'2026-01-15', expiry:'2027-01-15', daysToRenewal:196, status:'green', coverage:'War risk including terrorism, piracy — Red Sea routing active' },
 ]
 
 // ─── RENEWAL CALENDAR ────────────────────────────────────────────────────────
 export const RENEWAL_ITEMS = [
-  { id:'R001', category:'Insurance — H&M', item:'MT Prelude H&M',       due:'2026-08-01', daysLeft:80,  status:'amber', responsible:'Finance Controller', vessel:'MT Prelude'    },
-  { id:'R002', category:'Certificate',     item:'MT Prelude IOPP Cert',  due:'2026-06-20', daysLeft:38,  status:'amber', responsible:'Tech Supt.',        vessel:'MT Prelude'    },
-  { id:'R003', category:'Certificate',     item:'Cosmos 5 Inland Cert',  due:'2026-06-28', daysLeft:46,  status:'amber', responsible:'Tech Supt.',        vessel:'Cosmos 5'      },
-  { id:'R004', category:'Certificate',     item:'MT Anael MLC Cert',     due:'2026-07-10', daysLeft:58,  status:'amber', responsible:'Tech Supt.',        vessel:'MT Anael'      },
-  { id:'R005', category:'Class',           item:'MT Nura Kara Class Renewal',due:'2026-08-01',daysLeft:80,status:'amber', responsible:'DPA',               vessel:'MT Nura Kara'  },
-  { id:'R006', category:'Insurance — P&I', item:'All Vessels P&I',       due:'2027-02-20', daysLeft:283, status:'green', responsible:'Finance Controller', vessel:'All Tankers'   },
-  { id:'R007', category:'Insurance — H&M', item:'MT Anael H&M',          due:'2027-01-15', daysLeft:247, status:'green', responsible:'Finance Controller', vessel:'MT Anael'      },
-  { id:'R008', category:'Provisions',      item:'MT Prelude Provisions',  due:'2026-06-15', daysLeft:33,  status:'amber', responsible:'Master',            vessel:'MT Prelude'    },
-  { id:'R009', category:'Provisions',      item:'MT Anael Provisions',    due:'2026-07-01', daysLeft:49,  status:'amber', responsible:'Master',            vessel:'MT Anael'      },
-  { id:'R010', category:'Lubes',           item:'MT Nura Kara Lubes',     due:'2026-06-30', daysLeft:48,  status:'amber', responsible:'Chief Engineer',    vessel:'MT Nura Kara'  },
-  { id:'R011', category:'Bunkering',       item:'MT Prelude Next Bunker', due:'2026-05-28', daysLeft:15,  status:'red',   responsible:'Master',            vessel:'MT Prelude'    },
-  { id:'R012', category:'Bunkering',       item:'MT Anael Next Bunker',   due:'2026-06-05', daysLeft:23,  status:'amber', responsible:'Master',            vessel:'MT Anael'      },
+  { id:'R001', category:'Insurance — H&M', item:'MT Prelude H&M',       due:'2026-08-01', daysLeft:29,  status:'red',   responsible:'Finance Controller', vessel:'MT Prelude'    },
+  { id:'R002', category:'Certificate',     item:'MT Prelude IOPP Cert',  due:'2026-08-10', daysLeft:38,  status:'amber', responsible:'Tech Supt.',        vessel:'MT Prelude'    },
+  { id:'R003', category:'Certificate',     item:'Cosmos 5 Inland Cert',  due:'2026-08-18', daysLeft:46,  status:'amber', responsible:'Tech Supt.',        vessel:'Cosmos 5'      },
+  { id:'R004', category:'Certificate',     item:'MT Anael MLC Cert',     due:'2026-09-02', daysLeft:61,  status:'amber', responsible:'Tech Supt.',        vessel:'MT Anael'      },
+  { id:'R005', category:'Class',           item:'MT Nura Kara Class Renewal',due:'2026-09-20',daysLeft:79,status:'amber', responsible:'DPA',               vessel:'MT Nura Kara'  },
+  { id:'R006', category:'Insurance — P&I', item:'All Vessels P&I',       due:'2027-02-20', daysLeft:232, status:'green', responsible:'Finance Controller', vessel:'All Tankers'   },
+  { id:'R007', category:'Insurance — H&M', item:'MT Anael H&M',          due:'2027-01-15', daysLeft:196, status:'green', responsible:'Finance Controller', vessel:'MT Anael'      },
+  { id:'R008', category:'Provisions',      item:'MT Prelude Provisions',  due:'2026-07-20', daysLeft:17,  status:'amber', responsible:'Master',            vessel:'MT Prelude'    },
+  { id:'R009', category:'Provisions',      item:'MT Anael Provisions',    due:'2026-08-01', daysLeft:29,  status:'amber', responsible:'Master',            vessel:'MT Anael'      },
+  { id:'R010', category:'Lubes',           item:'MT Nura Kara Lubes',     due:'2026-07-25', daysLeft:22,  status:'amber', responsible:'Chief Engineer',    vessel:'MT Nura Kara'  },
+  { id:'R011', category:'Bunkering',       item:'MT Prelude Next Bunker', due:'2026-07-22', daysLeft:19,  status:'amber', responsible:'Master',            vessel:'MT Prelude'    },
+  { id:'R012', category:'Bunkering',       item:'MT Anael Next Bunker',   due:'2026-07-28', daysLeft:25,  status:'amber', responsible:'Master',            vessel:'MT Anael'      },
 ]
 
 // ─── BUNKERING LOG ────────────────────────────────────────────────────────────
@@ -142,7 +142,8 @@ export const BUNKERING = [
   { id:'BNK-002', vessel:'MT Anael',       date:'2026-04-28', port:'Jeddah',    grade:'VLSFO', qty:600, unit:'MT', pricePerTon:608, totalCost:364800, supplier:'Saudi Aramco Bunkers',  terms:'7 days net',  quality:'ISO 8217 RMG380', sampleRetained:true, status:'completed' },
   { id:'BNK-003', vessel:'MT Nura Kara',   date:'2026-05-08', port:'Hamriyah',  grade:'VLSFO', qty:920, unit:'MT', pricePerTon:615, totalCost:565800, supplier:'ENOC Marine',           terms:'30 days net', quality:'ISO 8217 RMG380', sampleRetained:true, status:'completed' },
   { id:'BNK-004', vessel:'MT Nura Bright', date:'2026-05-10', port:'Fujairah',  grade:'MGO',   qty:120, unit:'MT', pricePerTon:748, totalCost:89760,  supplier:'Peninsula Petroleum',   terms:'30 days net', quality:'ISO 8217 DMA',    sampleRetained:true, status:'completed' },
-  { id:'BNK-005', vessel:'MT Prelude',     date:'2026-05-28', port:'Ras Tanura',grade:'VLSFO', qty:800, unit:'MT', pricePerTon:0,   totalCost:0,       supplier:'TBD — RFQ in progress', terms:'TBD',         quality:'ISO 8217 RMG380', sampleRetained:false,status:'planned'   },
+  { id:'BNK-005', vessel:'MT Prelude',     date:'2026-05-28', port:'Ras Tanura',grade:'VLSFO', qty:800, unit:'MT', pricePerTon:618, totalCost:494400, supplier:'Saudi Aramco Bunkers',  terms:'30 days net', quality:'ISO 8217 RMG380', sampleRetained:true, status:'completed'  },
+  { id:'BNK-006', vessel:'MT Prelude',     date:'2026-07-22', port:'Fujairah',  grade:'VLSFO', qty:750, unit:'MT', pricePerTon:0,   totalCost:0,       supplier:'TBD — RFQ in progress', terms:'TBD',         quality:'ISO 8217 RMG380', sampleRetained:false,status:'planned'   },
 ]
 
 // ─── POOL EARNINGS ────────────────────────────────────────────────────────────
@@ -151,8 +152,10 @@ export const POOL_EARNINGS = [
   { id:'PE-002', pool:'Hafnia',         vessel:'MT Prelude',     period:'Apr-26', grossEarnings:598200, poolDeductions:29910, netEarnings:568290, poolPoints:1.05, tce:19940, statement:'MT_Prelude_Hafnia_Apr2026.pdf',   uploadDate:'2026-05-10', note:'Final month in Hafnia pool' },
   { id:'PE-003', pool:'Maersk Tankers', vessel:'MT Nura Kara',   period:'Mar-26', grossEarnings:621000, poolDeductions:31050, netEarnings:589950, poolPoints:1.10, tce:20700, statement:'MT_NuraKara_Maersk_Mar2026.pdf', uploadDate:'2026-04-09' },
   { id:'PE-004', pool:'Hafnia',         vessel:'MT Prelude',     period:'Mar-26', grossEarnings:582000, poolDeductions:29100, netEarnings:552900, poolPoints:1.02, tce:19400, statement:'MT_Prelude_Hafnia_Mar2026.pdf',   uploadDate:'2026-04-11' },
-  { id:'PE-005', pool:'Maersk Tankers', vessel:'MT Nura Kara',  period:'May-26', grossEarnings:654000, poolDeductions:32700, netEarnings:621300, poolPoints:1.14, tce:21710, statement:'MT_NuraKara_Maersk_May2026.pdf', uploadDate:'2026-05-10' },
-  { id:'PE-006', pool:'Maersk Tankers', vessel:'MT Prelude',    period:'May-26', grossEarnings:612000, poolDeductions:30600, netEarnings:581400, poolPoints:1.08, tce:20460, statement:'MT_Prelude_Maersk_May2026.pdf',  uploadDate:'2026-05-10', note:'First month in Maersk Tankers Pool' },
+  { id:'PE-005', pool:'Maersk Tankers', vessel:'MT Nura Kara',  period:'May-26', grossEarnings:654000, poolDeductions:32700, netEarnings:621300, poolPoints:1.14, tce:21710, statement:'MT_NuraKara_Maersk_May2026.pdf', uploadDate:'2026-06-09' },
+  { id:'PE-006', pool:'Maersk Tankers', vessel:'MT Prelude',    period:'May-26', grossEarnings:612000, poolDeductions:30600, netEarnings:581400, poolPoints:1.08, tce:20460, statement:'MT_Prelude_Maersk_May2026.pdf',  uploadDate:'2026-06-09', note:'First month in Maersk Tankers Pool' },
+  { id:'PE-007', pool:'Maersk Tankers', vessel:'MT Nura Kara',  period:'Jun-26', grossEarnings:661200, poolDeductions:33060, netEarnings:628140, poolPoints:1.15, tce:22040, statement:'MT_NuraKara_Maersk_Jun2026.pdf', uploadDate:'2026-07-02' },
+  { id:'PE-008', pool:'Maersk Tankers', vessel:'MT Prelude',    period:'Jun-26', grossEarnings:624000, poolDeductions:31200, netEarnings:592800, poolPoints:1.09, tce:20800, statement:'MT_Prelude_Maersk_Jun2026.pdf',  uploadDate:'2026-07-02', note:'Second month in Maersk Tankers Pool' },
 ]
 
 // ─── AWARDS — BEST MASTER & CREW ─────────────────────────────────────────────
@@ -202,17 +205,18 @@ export const VERTICALS = [
 ]
 
 export const REVENUE_TREND = [
-  {m:'Jun 25',r:14.2,e:3.8},{m:'Jul 25',r:15.8,e:4.2},{m:'Aug 25',r:13.1,e:3.1},
+  {m:'Jul 25',r:15.8,e:4.2},{m:'Aug 25',r:13.1,e:3.1},
   {m:'Sep 25',r:16.4,e:4.6},{m:'Oct 25',r:17.2,e:5.1},{m:'Nov 25',r:18.1,e:5.4},
   {m:'Dec 25',r:19.4,e:6.1},{m:'Jan 26',r:16.8,e:4.8},{m:'Feb 26',r:15.3,e:4.1},
   {m:'Mar 26',r:17.9,e:5.3},{m:'Apr 26',r:18.6,e:5.7},{m:'May 26',r:15.9,e:5.0},
+  {m:'Jun 26',r:16.8,e:5.2},
 ]
 
 export const CRITICAL_ITEMS = [
-  { id:1, urg:'high',   title:'MT Prelude — Pool Transfer Pending',      detail:'Transfer from Hafnia to Maersk Tankers pool. Confirm allocation date.',          action:'Confirm Transfer', assignee:'fleet_mgr' },
-  { id:2, urg:'high',   title:'MT Prelude IOPP Cert — 38 Days',          detail:'IOPP Certificate expires 20 Jun. Renewal survey must be booked immediately.',    action:'Book Survey',      assignee:'tech_supt'  },
-  { id:3, urg:'medium', title:'MT Prelude Bunker — 15 Days',             detail:'Next bunker due 28 May at Ras Tanura. RFQ in progress — confirm supplier.',      action:'Confirm RFQ',      assignee:'ops'        },
-  { id:4, urg:'medium', title:'Cosmos 4 & 5 Below Utilisation Target',   detail:'Both at 78–82% vs 85% target. Review cargo schedule.',                           action:'Review Schedule',  assignee:'ops'        },
+  { id:1, urg:'high',   title:'MT Prelude — Pool Transfer Complete',        detail:'Transfer from Hafnia to Maersk Tankers pool confirmed. Jun-26 pool statement received.',                action:'View Earnings',    assignee:'fleet_mgr' },
+  { id:2, urg:'high',   title:'MT Prelude IOPP Cert — 38 Days',             detail:'IOPP Certificate expires 10 Aug. Renewal survey must be booked immediately.',                          action:'Book Survey',      assignee:'tech_supt'  },
+  { id:3, urg:'medium', title:'MT Prelude H&M Insurance — 29 Days',         detail:'Hull & Machinery policy expires 1 Aug. Renewal terms from Skuld required urgently.',                  action:'Confirm Renewal',  assignee:'finance'    },
+  { id:4, urg:'medium', title:'Cosmos 4 & 5 Below Utilisation Target',      detail:'Both at 78–82% vs 85% target. Review cargo schedule.',                                                 action:'Review Schedule',  assignee:'ops'        },
 ]
 
 export const LEGAL_MATTERS = [
@@ -222,7 +226,7 @@ export const LEGAL_MATTERS = [
     party:'Gulf Petrochemicals FZE',
     pos:'Claimant',
     exp:2400000,
-    next:'2026-06-14',
+    next:'2026-07-21',
     event:'Arbitration Hearing',
     status:'red',
     spend:85000,
@@ -236,7 +240,7 @@ export const LEGAL_MATTERS = [
     cons:'Counterparty has deep pockets. Delay in proceedings adds cost.',
     benchChangeDate:null,
     confidentiality:'Strictly Confidential',
-    comment:'Counsel briefing not yet confirmed for 14 Jun hearing',
+    comment:'Counsel briefing confirmed for 21 Jul hearing',
     vessel:'MT Prelude',
   },
   {
@@ -245,7 +249,7 @@ export const LEGAL_MATTERS = [
     party:'Trafigura Pte Ltd',
     pos:'Respondent',
     exp:890000,
-    next:'2026-07-02',
+    next:'2026-08-05',
     event:'Pleadings Deadline',
     status:'amber',
     spend:32000,
@@ -268,7 +272,7 @@ export const LEGAL_MATTERS = [
     party:'Chief Engineer R. Santos',
     pos:'Respondent',
     exp:320000,
-    next:'2026-06-15',
+    next:'2026-07-25',
     event:'Medical Assessment — Follow Up',
     status:'amber',
     spend:18500,
@@ -282,7 +286,7 @@ export const LEGAL_MATTERS = [
     cons:'Crew member has legal representation. Delay risk if settlement rejected.',
     benchChangeDate:null,
     confidentiality:'Confidential',
-    comment:'Medical report due — settlement offer under consideration',
+    comment:'Medical report received — settlement offer under consideration',
     vessel:'MT Nura Kara',
   },
   {
@@ -312,30 +316,30 @@ export const LEGAL_MATTERS = [
 ]
 
 export const LEGAL_CALENDAR = [
-  { date:'2026-06-14', matter:'L001', label:'Gulf Petrochemicals — Arbitration Hearing', type:'red' },
-  { date:'2026-06-15', matter:'L003', label:'Crew Injury Santos — Medical Assessment', type:'amber' },
-  { date:'2026-07-02', matter:'L002', label:'Trafigura Cargo Claim — Pleadings', type:'amber' },
+  { date:'2026-07-21', matter:'L001', label:'Gulf Petrochemicals — Arbitration Hearing', type:'red' },
+  { date:'2026-07-25', matter:'L003', label:'Crew Injury Santos — Medical Assessment', type:'amber' },
+  { date:'2026-08-05', matter:'L002', label:'Trafigura Cargo Claim — Pleadings', type:'amber' },
   { date:'2026-08-19', matter:'L004', label:'Timblo Drydocks — Expert Determination', type:'amber' },
 ]
 
 export const CERTIFICATES = [
-  { vessel:'MT Prelude',    cert:'IOPP Certificate',             expires:'2026-06-20', days:38,  status:'amber' },
-  { vessel:'Cosmos 5',      cert:'Inland Waterways Certificate', expires:'2026-06-28', days:46,  status:'amber' },
-  { vessel:'MT Anael',      cert:'MLC Certificate',              expires:'2026-07-10', days:58,  status:'amber' },
-  { vessel:'MT Nura Kara',  cert:'Class Renewal Survey',         expires:'2026-08-01', days:80,  status:'green' },
-  { vessel:'MT Nura Bright',cert:'Safety Management Certificate',expires:'2026-09-15', days:125, status:'green' },
+  { vessel:'MT Prelude',    cert:'IOPP Certificate',             expires:'2026-08-10', days:38,  status:'amber' },
+  { vessel:'Cosmos 5',      cert:'Inland Waterways Certificate', expires:'2026-08-18', days:46,  status:'amber' },
+  { vessel:'MT Anael',      cert:'MLC Certificate',              expires:'2026-09-02', days:61,  status:'amber' },
+  { vessel:'MT Nura Kara',  cert:'Class Renewal Survey',         expires:'2026-09-20', days:79,  status:'green' },
+  { vessel:'MT Nura Bright',cert:'Safety Management Certificate',expires:'2026-11-05', days:125, status:'green' },
 ]
 
 export const RED_FLAGS = [
-  { domain:'Fleet Operations', item:'MT Prelude — Pool transition unconfirmed',  actual:'Hafnia',  target:'Maersk',    gap:'Pending',   status:'amber', vessel:'V001' },
   { domain:'Fleet Operations', item:'Cosmos 4 — Below utilisation target',       actual:'82%',     target:'85%',       gap:'-3%',       status:'amber', vessel:'B004' },
   { domain:'Fleet Operations', item:'Cosmos 5 — Below utilisation target',       actual:'78%',     target:'85%',       gap:'-7%',       status:'amber', vessel:'B005' },
-  { domain:'Compliance',       item:'MT Prelude IOPP cert expiry 38 days',       actual:'38 days', target:'60d buffer',gap:'-22 days',  status:'amber', vessel:'V001' },
-  { domain:'Compliance',       item:'Cosmos 5 — Inland cert expiry 46 days',    actual:'46 days', target:'60d buffer',gap:'-14 days',  status:'amber', vessel:'B005' },
+  { domain:'Compliance',       item:'MT Prelude IOPP cert expiry — 38 days',     actual:'38 days', target:'60d buffer',gap:'-22 days',  status:'amber', vessel:'V001' },
+  { domain:'Compliance',       item:'MT Prelude H&M insurance — 29 days',        actual:'29 days', target:'60d buffer',gap:'-31 days',  status:'red',   vessel:'V001' },
+  { domain:'Compliance',       item:'Cosmos 5 — Inland cert expiry 46 days',     actual:'46 days', target:'60d buffer',gap:'-14 days',  status:'amber', vessel:'B005' },
   { domain:'Compliance',       item:'3 vessels CII not submitted',               actual:'3',       target:'0',         gap:'+3',        status:'red',   vessel:null   },
   { domain:'Financial',        item:'Ship Repairing revenue vs budget',          actual:'$1.4M',   target:'$1.6M',     gap:'-$0.2M',    status:'amber', vessel:null   },
-  { domain:'Legal',            item:'Arbitration briefing unconfirmed — 14 Jun', actual:'Pending', target:'7d prior',  gap:'—',         status:'red',   vessel:null   },
-  { domain:'Bunkering',        item:'MT Prelude bunker RFQ not confirmed',       actual:'Open',    target:'Confirmed', gap:'15 days',   status:'red',   vessel:'V001' },
+  { domain:'Legal',            item:'Arbitration hearing approaching — 21 Jul',  actual:'Pending', target:'7d prior',  gap:'—',         status:'red',   vessel:null   },
+  { domain:'Bunkering',        item:'MT Prelude bunker RFQ not confirmed',       actual:'Open',    target:'Confirmed', gap:'19 days',   status:'red',   vessel:'V001' },
 ]
 
 export const CREW = [
@@ -351,10 +355,10 @@ export const CREW = [
 ]
 
 export const CREW_SIGNOFFS = [
-  { vessel:'MT Anael',    name:'Capt. Pradeep Nair', rank:'Master', date:'2026-07-10', days:58,  status:'amber', action:'Relief being sourced'        },
-  { vessel:'Cosmos 2',    name:'Barge Master R. Kumar',rank:'Master',date:'2026-07-15', days:63,  status:'amber', action:'Sourcing India-based relief' },
-  { vessel:'MT Nura Kara',name:'Capt. Liu Wei',       rank:'Master', date:'2026-10-01', days:141, status:'green', action:'On schedule'                 },
-  { vessel:'MT Prelude',  name:'Capt. Ahmed Hassan',  rank:'Master', date:'2026-08-14', days:93,  status:'green', action:'On schedule'                 },
+  { vessel:'MT Anael',    name:'Capt. Pradeep Nair', rank:'Master', date:'2026-07-10', days:7,   status:'red',   action:'Relief sourcing — URGENT, 7 days remaining' },
+  { vessel:'Cosmos 2',    name:'Barge Master R. Kumar',rank:'Master',date:'2026-07-15', days:12,  status:'amber', action:'Sourcing India-based relief'                 },
+  { vessel:'MT Prelude',  name:'Capt. Ahmed Hassan',  rank:'Master', date:'2026-08-14', days:42,  status:'amber', action:'On schedule'                                 },
+  { vessel:'MT Nura Kara',name:'Capt. Liu Wei',       rank:'Master', date:'2026-10-01', days:90,  status:'green', action:'On schedule'                                 },
 ]
 
 export const SCENARIO_PRESETS = {
@@ -379,11 +383,11 @@ export function calcPL(a) {
 }
 
 export const ACTIVE_DEALS = [
-  { id:'D001', name:'MT Prelude Acquisition',     type:'Vessel Acquisition', status:'closed',   purpose:'Entry into Hafnia pool → Maersk Tankers', highlights:'47,200 DWT MR, 2018, DNV. Deployed into Hafnia pool. Transfer to Maersk Tankers in progress.',                        dealSize:28500000, equity:8550000,  debt:19950000, leverage:70, projectIRR:13.8, equityIRR:21.4, cashRequired:8550000, stage:'Closed',      counterparty:'Undisclosed', lead:'Chairman', targetClose:'2025-08-31', paybackYears:6.8, vertical:'Ship Owning' },
-  { id:'D002', name:'MT Anael Acquisition',       type:'Vessel Acquisition', status:'closed',   purpose:'TC to Trafigura — fixed cash flow certainty', highlights:'46,800 DWT MR, 2019, BV. TC $19,500/day until Jan 2027.',                                                         dealSize:30200000, equity:9060000,  debt:21140000, leverage:70, projectIRR:14.6, equityIRR:22.8, cashRequired:9060000, stage:'Closed',      counterparty:'Trafigura Pte Ltd', lead:'Chairman', targetClose:'2026-01-31', paybackYears:6.4, vertical:'Ship Owning' },
-  { id:'D003', name:'MT Nura Kara Acquisition',   type:'Vessel Acquisition', status:'closed',   purpose:'Maersk Tankers pool — higher pool points',    highlights:'47,500 DWT MR, 2017, LR. Direct entry into Maersk Tankers pool.',                                                 dealSize:27800000, equity:8340000,  debt:19460000, leverage:70, projectIRR:13.2, equityIRR:20.6, cashRequired:8340000, stage:'Closed',      counterparty:'Undisclosed', lead:'Chairman', targetClose:'2026-03-31', paybackYears:7.1, vertical:'Ship Owning' },
-  { id:'D004', name:'MT Nura Bright Acquisition', type:'Vessel Acquisition', status:'closed',   purpose:'Captive cargo programme vessel',               highlights:'46,500 DWT MR, 2020, DNV. Dedicated captive cargo. Acquired Apr 2026.',                                           dealSize:32100000, equity:9630000,  debt:22470000, leverage:70, projectIRR:12.8, equityIRR:19.4, cashRequired:9630000, stage:'Closed',      counterparty:'Undisclosed', lead:'Chairman', targetClose:'2026-04-30', paybackYears:7.4, vertical:'Ship Owning' },
-  { id:'D005', name:'Fifth MR Tanker — Pipeline', type:'Vessel Acquisition', status:'active', purpose:'Fleet expansion — increase pool allocation',   highlights:'Target 2018–2021 build MR, 45–50K DWT. Brokers engaged. Pool placement confirmed with Maersk Tankers.',            dealSize:29000000, equity:8700000,  debt:20300000, leverage:70, projectIRR:14.1, equityIRR:22.0, cashRequired:8700000, stage:'Origination', counterparty:'Various — brokers', lead:'Chairman', targetClose:'2026-09-30', paybackYears:6.6, vertical:'Ship Owning' },
+  { id:'D001', name:'MT Prelude Acquisition',     type:'Vessel Acquisition', status:'closed',   purpose:'Entry into Hafnia pool → Maersk Tankers', highlights:'47,200 DWT MR, 2018, DNV. Deployed into Maersk Tankers pool.',                                                    dealSize:28500000, equity:8550000,  debt:19950000, leverage:70, projectIRR:13.8, equityIRR:21.4, cashRequired:8550000, stage:'Closed',      counterparty:'Undisclosed', lead:'Chairman', targetClose:'2025-08-31', paybackYears:6.8, vertical:'Ship Owning' },
+  { id:'D002', name:'MT Anael Acquisition',       type:'Vessel Acquisition', status:'closed',   purpose:'TC to Trafigura — fixed cash flow certainty', highlights:'46,800 DWT MR, 2019, BV. TC $19,500/day until Jan 2027.',                                                     dealSize:30200000, equity:9060000,  debt:21140000, leverage:70, projectIRR:14.6, equityIRR:22.8, cashRequired:9060000, stage:'Closed',      counterparty:'Trafigura Pte Ltd', lead:'Chairman', targetClose:'2026-01-31', paybackYears:6.4, vertical:'Ship Owning' },
+  { id:'D003', name:'MT Nura Kara Acquisition',   type:'Vessel Acquisition', status:'closed',   purpose:'Maersk Tankers pool — higher pool points',    highlights:'47,500 DWT MR, 2017, LR. Direct entry into Maersk Tankers pool.',                                              dealSize:27800000, equity:8340000,  debt:19460000, leverage:70, projectIRR:13.2, equityIRR:20.6, cashRequired:8340000, stage:'Closed',      counterparty:'Undisclosed', lead:'Chairman', targetClose:'2026-03-31', paybackYears:7.1, vertical:'Ship Owning' },
+  { id:'D004', name:'MT Nura Bright Acquisition', type:'Vessel Acquisition', status:'closed',   purpose:'Captive cargo programme vessel',               highlights:'46,500 DWT MR, 2020, DNV. Dedicated captive cargo. Acquired Apr 2026.',                                        dealSize:32100000, equity:9630000,  debt:22470000, leverage:70, projectIRR:12.8, equityIRR:19.4, cashRequired:9630000, stage:'Closed',      counterparty:'Undisclosed', lead:'Chairman', targetClose:'2026-04-30', paybackYears:7.4, vertical:'Ship Owning' },
+  { id:'D005', name:'Fifth MR Tanker — Pipeline', type:'Vessel Acquisition', status:'active', purpose:'Fleet expansion — increase pool allocation',   highlights:'Target 2018–2021 build MR, 45–50K DWT. Brokers engaged. Pool placement confirmed with Maersk Tankers.',          dealSize:29000000, equity:8700000,  debt:20300000, leverage:70, projectIRR:14.1, equityIRR:22.0, cashRequired:8700000, stage:'Origination', counterparty:'Various — brokers', lead:'Chairman', targetClose:'2026-09-30', paybackYears:6.6, vertical:'Ship Owning' },
 ]
 export const DEAL_STAGES = ['Origination','Indicative Terms','Due Diligence','Credit Approval','Documentation','Closed']
 
@@ -401,22 +405,22 @@ export const HSE_INCIDENTS = [
   { id:'HSE-003', vessel:'Cosmos 4',      type:'Near Miss', desc:'Rope caught on winch drum — no injury',              date:'2026-04-10', severity:'low',    status:'closed', rootCause:'Winch guard missing',    corrective:'Guard fitted'                     },
   { id:'HSE-004', vessel:'MT Nura Bright',type:'Near Miss', desc:'Cargo manifold valve open before hose connection',   date:'2026-03-30', severity:'high',   status:'open',   rootCause:'Checklist not completed',corrective:'Dual-sign checklist enforced'      },
 ]
-export const HSE_KPI = { LTIF:0.38, TRCF:1.62, nearMisses:4, openActions:2, auditScore:89, daysWithoutLTI:156, industryLTIF:0.68 }
+export const HSE_KPI = { LTIF:0.38, TRCF:1.62, nearMisses:4, openActions:2, auditScore:89, daysWithoutLTI:207, industryLTIF:0.68 }
 
 export const ALERTS = [
   { id:'AL001', ts:'09:38', level:'critical', msg:'MT Prelude — IOPP Certificate expires in 38 days. Renewal survey required immediately.',    vessel:'V001', dismissed:false },
-  { id:'AL002', ts:'08:15', level:'high',     msg:'Pool transfer briefing unconfirmed — Maersk Tankers allocation date pending',               vessel:null,   dismissed:false },
-  { id:'AL003', ts:'08:00', level:'high',     msg:'MT Prelude bunker RFQ not confirmed — 15 days to planned bunker date',                       vessel:'V001', dismissed:false },
-  { id:'AL004', ts:'Yesterday', level:'medium',   msg:'Cosmos 4 & 5 utilisation below 85% target — review cargo schedule',                         vessel:null,   dismissed:false },
+  { id:'AL002', ts:'08:15', level:'high',     msg:'MT Prelude H&M insurance expires in 29 days — Skuld renewal terms required urgently',       vessel:'V001', dismissed:false },
+  { id:'AL003', ts:'08:00', level:'high',     msg:'MT Prelude bunker RFQ not confirmed — 19 days to planned bunker date',                      vessel:'V001', dismissed:false },
+  { id:'AL004', ts:'Yesterday', level:'medium',   msg:'Cosmos 4 & 5 utilisation below 85% target — review cargo schedule',                    vessel:null,   dismissed:false },
 ]
 
 export const ACTION_ITEMS = [
-  { id:'A001', item:'Confirm MT Prelude pool transfer date — Maersk Tankers allocation', owner:'fleet_mgr', ownerName:'Ravi Kumar',    due:'2026-05-20', status:'open',   priority:'high',   meeting:'BOD Meeting 08 May 2026' },
-  { id:'A002', item:'Book IOPP renewal survey for MT Prelude — expires 20 Jun',          owner:'tech_supt', ownerName:'S. Mehta',      due:'2026-05-25', status:'open',   priority:'high',   meeting:'BOD Meeting 08 May 2026' },
-  { id:'A003', item:'Confirm bunker supplier for MT Prelude — Ras Tanura 28 May',        owner:'ops',       ownerName:'P. Singh',      due:'2026-05-18', status:'overdue',priority:'high',   meeting:'Ops Review 12 May 2026'  },
-  { id:'A004', item:'Review Cosmos 4 & 5 cargo utilisation — optimise programme',        owner:'ops',       ownerName:'P. Singh',      due:'2026-05-22', status:'open',   priority:'medium', meeting:'BOD Meeting 08 May 2026' },
-  { id:'A005', item:'Confirm Hill Dickinson briefing for 14 Jun arbitration',             owner:'legal',     ownerName:'Legal Counsel', due:'2026-06-07', status:'open',   priority:'high',   meeting:'BOD Meeting 08 May 2026' },
-  { id:'A006', item:'Submit MT Anael relief master nomination',                           owner:'manning',   ownerName:'J. Fernandez',  due:'2026-06-10', status:'open',   priority:'medium', meeting:'Ops Review 12 May 2026'  },
+  { id:'A001', item:'Confirm MT Prelude pool Q3 allocation — Maersk Tankers confirmation', owner:'fleet_mgr', ownerName:'Ravi Kumar',    due:'2026-07-10', status:'open',   priority:'high',   meeting:'BOD Meeting 01 Jul 2026' },
+  { id:'A002', item:'Book IOPP renewal survey for MT Prelude — expires 10 Aug',            owner:'tech_supt', ownerName:'S. Mehta',      due:'2026-07-15', status:'open',   priority:'high',   meeting:'BOD Meeting 01 Jul 2026' },
+  { id:'A003', item:'Confirm bunker supplier for MT Prelude — Fujairah 22 Jul',            owner:'ops',       ownerName:'P. Singh',      due:'2026-07-08', status:'overdue',priority:'high',   meeting:'Ops Review 25 Jun 2026'  },
+  { id:'A004', item:'Review Cosmos 4 & 5 cargo utilisation — optimise programme',          owner:'ops',       ownerName:'P. Singh',      due:'2026-07-14', status:'open',   priority:'medium', meeting:'BOD Meeting 01 Jul 2026' },
+  { id:'A005', item:'Confirm Hill Dickinson briefing for 21 Jul arbitration',              owner:'legal',     ownerName:'Legal Counsel', due:'2026-07-14', status:'open',   priority:'high',   meeting:'BOD Meeting 01 Jul 2026' },
+  { id:'A006', item:'Submit MT Anael relief master nomination — sign-off 10 Jul',          owner:'manning',   ownerName:'J. Fernandez',  due:'2026-07-05', status:'overdue',priority:'high',   meeting:'Ops Review 25 Jun 2026'  },
 ]
 
 export const CONNECTORS = [
